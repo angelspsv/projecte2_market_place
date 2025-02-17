@@ -1,0 +1,74 @@
+/* Estilo general */
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f2f5;
+}
+
+/* Título superior */
+#nom {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    text-align: center;
+    text-transform: lowercase;
+}
+
+/* Contenedor principal */
+#per_imatge {
+    padding: 40px 20px;
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Imagen */
+#per_imatge img {
+    width: 200px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+/* Contenedor de botones */
+#per_botons {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+/* Botones */
+#per_botons button {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+#per_botons button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 128, 0, 0.4);
+}
+
+/* Responsive para móviles */
+@media (max-width: 600px) {
+    #per_botons {
+        flex-direction: column;
+    }
+
+    #per_botons button {
+        width: 100%;
+    }
+}
