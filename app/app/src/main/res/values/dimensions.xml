@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- manrope -->
+    <dimen name="manrope_text_size">20sp</dimen>
+    <dimen name="manrope_outer_text_size">25sp</dimen>
+    <dimen name="manrope_mini_text_size">10sp</dimen>
+
+    <!-- kanit -->
+    <dimen name="kanit_title_text_size">35sp</dimen>
+</resources>

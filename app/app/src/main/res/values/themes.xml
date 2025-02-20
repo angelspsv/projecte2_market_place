@@ -1,0 +1,18 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+<!--    <style name="Base.Theme.Localconnect" parent="Theme.Material3.DayNight.NoActionBar">-->
+<!--        &lt;!&ndash; Customize your light theme here. &ndash;&gt;-->
+<!--        &lt;!&ndash; <item name="colorPrimary">@color/my_light_primary</item> &ndash;&gt;-->
+<!--    </style>-->
+
+<!--    <style name="Theme.Localconnect" parent="Base.Theme.Localconnect" />-->
+
+    <style name="default_outer_text" parent="Theme.MaterialComponents.DayNight">
+        <item name="android:textColor">@color/primary_color</item>
+    </style>
+
+    <style name="title_text" parent="default_outer_text">
+        <item name="android:fontFamily">@font/kanit_extra_bold</item>
+        <item name="android:textSize">@dimen/kanit_title_text_size</item>
+    </style>
+</resources>
