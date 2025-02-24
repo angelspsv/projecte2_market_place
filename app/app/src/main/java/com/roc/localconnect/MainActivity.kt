@@ -13,8 +13,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
-        findViewById<Button>(R.id.main_register).setOnClickListener()
-        {startActivity(Intent(this, MainActivity::class.java)).apply {}}
+
+//        findViewById<Button>(R.id.main_log_in).setOnClickListener() {startActivity(Intent(this, MainActivity::class.java)).apply {}}
+//        findViewById<Button>(R.id.main_register).setOnClickListener() {startActivity(Intent(this, MainActivity::class.java)).apply {}}
 
 //        enableEdgeToEdge()
 //        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
