@@ -1,11 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ca">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registre</title>
+    <title>Nou Usuari</title>
+    <link rel="stylesheet" href="css_angel/nou_usuari_css.css">
 </head>
 <body>
-    <p>Registre</p>
+    <div id=usuari>
+        <p id="titol">Nou usuari. Registre</p>
+    </div>
+    <form id="nou_usuari_form">
+        <div id="camps">
+            <div class="fila">
+                <label for="nom">Nom:</label>
+                <input type="text" id="nom" required>
+            </div>
+        
+            <div class="fila">
+                <label for="cognom">Cognom:</label>
+                <input type="text" id="cognom" required>
+            </div>
+        
+            <div class="fila">
+                <label for="email">Correu electrònic:</label>
+                <input type="email" id="email" required>
+            </div>
+        
+            <div class="fila">
+                <label for="contrasenya">Contrasenya:</label>
+                <input type="password" id="contrasenya" required>
+            </div>
+        
+            <div class="fila">
+                <label for="telefon">Telèfon:</label>
+                <input type="tel" id="telefon" required>
+            </div>
+        
+            <div class="fila">
+                <label for="dni">DNI:</label>
+                <input type="text" id="dni" required>
+            </div>
+
+            <div class="fila">
+                <label for="comarca">Comarca:</label>
+                <select id="comarca" required>
+                    <option value="">Selecciona una comarca</option>
+                    <option value="altcamp">Alt Camp</option>
+                    <option value="altemporda">Alt Empordà</option>
+                    <option value="altpenedes">Alt Penedès</option>
+                    <option value="alturgell">Alt Urgell</option>
+                    <option value="altaribagorsa">Alta Ribagorça</option>
+                    <option value="anoia">Anoia</option>
+                    <option value="bages">Bages</option>
+                    <option value="baixcamp">Baix Camp</option>
+                    <option value="baixebre">Baix Ebre</option>
+                    <option value="baixemporda">Baix Empordà</option>
+                    <option value="baixllobregat">Baix Llobregat</option>
+                    <option value="baixpenedes">Baix Penedès</option>
+                    <option value="barcelones">Barcelonès</option>
+                    <option value="bergueda">Berguedà</option>
+                    <option value="cerdanya">Cerdanya</option>
+                    <option value="concadebarbera">Conca de Barberà</option>
+                    <option value="garraf">Garraf</option>
+                    <option value="garrigues">Garrigues</option>
+                    <option value="garrotxa">Garrotxa</option>
+                    <option value="girones">Gironès</option>
+                    <option value="maresme">Maresme</option>
+                    <option value="montsia">Montsià</option>
+                    <option value="noguera">Noguera</option>
+                    <option value="osona">Osona</option>
+                    <option value="pallarsjussa">Pallars Jussà</option>
+                    <option value="pallarssobira">Pallars Sobirà</option>
+                    <option value="pladurgell">Pla d'Urgell</option>
+                    <option value="pladelestany">Pla de l'Estany</option>
+                    <option value="priorat">Priorat</option>
+                    <option value="riberadebre">Ribera d'Ebre</option>
+                    <option value="ripolles">Ripollès</option>
+                    <option value="segarra">Segarra</option>
+                    <option value="segria">Segrià</option>
+                    <option value="selva">Selva</option>
+                    <option value="solsones">Solsonès</option>
+                    <option value="tarragones">Tarragonès</option>
+                    <option value="terraalta">Terra Alta</option>
+                    <option value="urgell">Urgell</option>
+                    <option value="valldearan">Vall d'Aran</option>
+                    <option value="vallesoccidental">Vallès Occidental</option>
+                    <option value="vallesoriental">Vallès Oriental</option>
+                </select>
+            </div>
+
+            <div class="fila">
+                <label for="tipus_usuari">Tipus d'usuari:</label>
+                <select id="tipus_usuari" required>
+                    <option value="">Selecciona una opció</option>
+                    <option value="comprador">Comprador</option>
+                    <option value="venedor">Venedor</option>
+                </select>
+            </div>
+        
+            <div class="fila">
+                <label for="iban">Compte bancari (IBAN):</label>
+                <input type="text" id="iban" required>
+            </div>
+        </div>
+        <div id="botons">
+            <button type="submit">CREAR NOU USUARI</button>
+            <button type="button" id="tornar">Tornar</button>
+        </div>
+    </form>
+
+    <script src="js_angel/nou_usuari.js"></script>
 </body>
 </html>
