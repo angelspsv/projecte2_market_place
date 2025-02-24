@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import mysql.connector
 from typing import Union, List
 from typing import Optional
-from connexio import connection_db
+from connection import connexio_db
 from functions import *
 
 
@@ -30,7 +30,7 @@ def read_root():
 @app.get("/usuaris", response_model=List[dict])
 async def obtenir_usuaris():
     try:
-        conn = connection_db()
+        conn = connexio_db()
         if not conn:  
             raise HTTPException(status_code=500, detail="No connection data base")  
         
