@@ -1,3 +1,4 @@
+//treballem amb el formulari
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("nou_usuari_form");
     const btnTornar = document.getElementById("tornar");
@@ -12,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const email_entrat = document.getElementById("email").value.trim().toLowerCase();
         const contrasenya_entrada = document.getElementById("contrasenya").value.trim();
         const telefon_entrat = document.getElementById("telefon").value.trim();
-        const dni_entrat = document.getElementById("dni").value.trim().toLowerCase();
+        const dni_entrat = document.getElementById("dni").value.trim();
         const comarca = document.getElementById("comarca").value;
         const tipus_usuari = document.getElementById("tipus_usuari").value;
         const iban_entrat = document.getElementById("iban").value.trim().toLowerCase();
@@ -60,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         //prova pel compte bancari
-        if (!/^[A-Z]{2}\d{22}$/.test(iban_entrat)) {
+        if (!/^[a-zA-Z]{2}\d{22}$/.test(iban_entrat)) {
             alert("IBAN no vàlid.");
             return;
         }
@@ -93,12 +94,15 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
             alert("Usuari creat correctament!");
             form.reset();
+            window.location.href = "inici_sessio.html";
         })
         .catch(error => {
             alert("Error en el registre. Torna-ho a intentar.");
             console.error("Error:", error);
         });
         */
+        //temporalment, mentre no funciones l'endpoint
+        window.location.href = "inici_sessio.html";
     });
 
     //boto per tornar
