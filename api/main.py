@@ -50,6 +50,13 @@ async def obtenir_usuaris():
 
 
 
+#enpoint per retornar un usuari amb totes les seves dades a partir del seu ID
+@app.get("/usuari/{id}", response_model= dict)
+async def retornar_usuari(id: int):
+    usuari_data = read_usuari(id)
+    return user_schema(usuari_data)
+
+
 
 #per validar les dades abans del POST/insert
 class Usuari(BaseModel):

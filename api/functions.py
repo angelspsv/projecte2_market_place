@@ -6,19 +6,49 @@ from fastapi import HTTPException
 def user_schema(user) -> dict:
     return {
         "id_usuari": user[0],
-        "nom": user[1],
-        "cognom": user[2],
-        "correu": user[3],
-        "telefon": user[4],
-        "comarca": user[5],
-        "tipus_usuari": user[6],
-        "compte_banc": user[7],
+        "dni": user[1],
+        "nom": user[2],
+        "cognom": user[3],
+        "correu": user[4],
+        "telefon": user[5],
+        "comarca": user[6],
+        "tipus_usuari": user[7],
+        "compte_banc": user[8],
     }
 
 
 # rep una tupla d'usuaris i retorna una lista de diccionaris
 def users_schema(users) -> dict:
     return [user_schema(user) for user in users]
+
+
+
+# metode READ / GET per obtenir les dades d'un usuari
+def read_usuari(id):
+    try:
+        conn = connexio_db()
+        if not conn:  
+            raise HTTPException(status_code=500, detail="No connection data base")  
+        # fem la query i l'executem
+        cursor = conn.cursor()  
+        cursor.execute("SELECT * FROM usuaris WHERE id = %s", (id,))
+        usuari = cursor.fetchone()
+        
+        #si no existeix l'usuari amb id X executa excepció
+        if usuari is None:
+            raise HTTPException(status_code=404, detail='ID usuari not found')
+        # retornem l'usuari
+        return usuari
+
+    except mysql.connector.Error as e:
+        raise HTTPException(status_code=500, detail=f"Error en obtenir els usuaris: {e}")
+    
+    finally:
+        if conn.is_connected():
+            cursor.close()
+            conn.close()
+
+
 
 
 # inserim un nou usuari a la taula usuaris
