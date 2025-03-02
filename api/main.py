@@ -26,7 +26,7 @@ def read_root():
     return {"Hello" : "World"}
 
 
-
+#endpoint per veure tots els usuaris
 @app.get("/usuaris", response_model=List[dict])
 async def obtenir_usuaris():
     try:
@@ -50,6 +50,13 @@ async def obtenir_usuaris():
 
 
 
+#enpoint per retornar un usuari amb totes les seves dades a partir del seu ID
+@app.get("/usuari/{id}", response_model= dict)
+async def retornar_usuari(id: int):
+    usuari_data = read_usuari(id)
+    return user_schema(usuari_data)
+
+
 
 #per validar les dades abans del POST/insert
 class Usuari(BaseModel):
@@ -64,7 +71,9 @@ class Usuari(BaseModel):
     
 
 #endpoint nou_usuari
-@app.post("/nou_usuari/")
+@app.post("/nou_usuari/", response_model=dict)
 async def create_usuari(usuari: Usuari):
-    #fer el codi
-    print('falta codi')
+    resultat_insert = insert_new_user(usuari)
+    return resultat_insert
+
+
