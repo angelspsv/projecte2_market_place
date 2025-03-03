@@ -77,3 +77,18 @@ async def create_usuari(usuari: Usuari):
     return resultat_insert
 
 
+# per validar les dades de Producte abans del POST/insert
+class Producte(BaseModel):
+    id: int
+    id_vendedor: int
+    nom: str
+    descripcio: str
+    preu: float
+    stock: int
+
+
+# endpoint nou producte (POST/INSERT) a la taula productes
+@app.post("/nou_producte/", response_model=dict)
+async def create_producte(producte: Producte):
+    result = insert_nou_producte(producte)
+    return result
