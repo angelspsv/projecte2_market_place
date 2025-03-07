@@ -10,10 +10,11 @@ def user_schema(user) -> dict:
         "nom": user[2],
         "cognom": user[3],
         "correu": user[4],
-        "telefon": user[5],
-        "comarca": user[6],
-        "tipus_usuari": user[7],
-        "compte_banc": user[8],
+        "contrasenya": user[5],
+        "telefon": user[6],
+        "comarca": user[7],
+        "tipus_usuari": user[8],
+        "compte_banc": user[9],
     }
 
 
@@ -58,7 +59,7 @@ def insert_new_user(usuari):
         conn = connexio_db()
         cur = conn.cursor()
         #preparem l'insert per la taula
-        cur.execute("INSERT INTO usuaris (dni, nom, cognom, email, telefon, comarca, tipus_usuaris, compte_banc) VALUES (%s, %s, %s, %s, %s,%s, %s, %s)", (usuari.dni, usuari.nom, usuari.cognom, usuari.email, usuari.telefon, usuari.comarca, usuari.tipus_usuaris, usuari.compte_banc))
+        cur.execute("INSERT INTO usuaris (dni, nom, cognom, email, contrasenya, telefon, comarca, tipus_usuaris, compte_banc) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (usuari.dni, usuari.nom, usuari.cognom, usuari.email, usuari.contrasenya, usuari.telefon, usuari.comarca, usuari.tipus_usuaris, usuari.compte_banc))
         #desem els canvis a la taula/bbdd
         conn.commit()
         return {"message" : "inserit nou usuari amb exit"}

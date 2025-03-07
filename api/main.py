@@ -64,6 +64,7 @@ class Usuari(BaseModel):
     nom: str
     cognom: str
     email: str
+    contrasenya: str
     telefon: int
     comarca: str
     tipus_usuaris: bool
