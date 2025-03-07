@@ -50,8 +50,9 @@ body {
     padding: 15px 30px;
     border: none;
     border-radius: 8px;
-    background-color: #4CAF50;
-    color: white;
+    background-color: #6BED8D;
+    color: black;
+    font-weight: bold;
     font-size: 1em;
     cursor: pointer;
     transition: transform 0.3s, box-shadow 0.3s;

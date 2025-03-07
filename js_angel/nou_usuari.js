@@ -68,20 +68,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
         //construir objecte nou usuari
         const nou_usuari = {
-            nom_entrat,
-            cognom_entrat,
-            email_entrat,
-            contrasenya_entrada,
-            telefon_entrat,
-            dni_entrat,
-            comarca,
-            tipus_usuari,
-            iban_entrat
+            dni: dni_entrat,
+            nom: nom_entrat,
+            cognom: cognom_entrat,
+            email: email_entrat,
+            contrasenya: contrasenya_entrada,
+            telefon: telefon_entrat,
+            comarca: comarca,
+            tipus_usuaris: tipus_usuari,
+            compte_banc: iban_entrat,
         };
+        
 
         console.log(nou_usuari);
 
-        /*
+    /*  
         //enviem les dades cridant la API 
         fetch("http://127.0.0.1:8000/nou_usuari/", {
             method: "POST",
@@ -100,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("Error en el registre. Torna-ho a intentar.");
             console.error("Error:", error);
         });
-        */
+    */    
         //temporalment, mentre no funciones l'endpoint
         window.location.href = "inici_sessio.html";
     });

@@ -1,0 +1,49 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f8f8f8;
+    padding: 15px;
+    /* border: 2px solid black; */
+}
+
+.welcome {
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+#buttons-container {
+    display: flex;
+    gap: 10px;
+    margin-right: 10px;
+}
+
+.btn {
+    text-decoration: none;
+    background-color: #6BED8D;
+    padding: 10px 15px;
+    border-radius: 5px;
+    color: black;
+    font-weight: bold;
+    /* border: 1px solid gray; */
+    transition: background 0.3s;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #3a833d;
+}
+
+/* boto actiu (color + foscor i sense hover) */
+.btn.active {
+    background-color: #3a833d;
+    cursor: default;
+    pointer-events: none;
+}
