@@ -4,4 +4,9 @@
     <color name="secondary_color">#FF00FF</color>
     <color name="background_color">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="gray">#D7DBD8</color>
+    <color name="nav_bar_selected_color">@color/black</color>
+    <color name="nav_bar_unselected_color">@color/black</color>
+    <color name="nav_bar_background_color">@color/gray</color>
+
 </resources>
