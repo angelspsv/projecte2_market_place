@@ -20,13 +20,12 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="221dp"
+        android:layout_height="235dp"
+        app:layout_constraintBottom_toTopOf="@+id/main_log_in"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_title"
-        app:layout_constraintVertical_bias="0.284"
         app:srcCompat="@drawable/app_logo" />
 
     <Button
@@ -34,15 +33,17 @@
         style="@style/inner_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="9dp"
         android:background="@drawable/rounded_button"
         android:gravity="center"
-        android:padding="20px"
+        android:paddingHorizontal="45dp"
+        android:paddingVertical="10dp"
         android:text="INICIAR SESSIÓ"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/main_register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_title"
-        app:layout_constraintVertical_bias="0.65" />
+        app:layout_constraintVertical_bias="0.937" />
 
     <Button
         android:id="@+id/main_register"
@@ -51,7 +52,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_button"
         android:gravity="center"
-        android:padding="20px"
+        android:paddingHorizontal="45dp"
+        android:paddingVertical="10dp"
         android:text="REGISTRAR-SE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,5 +61,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_title"
         app:layout_constraintVertical_bias="0.753" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
