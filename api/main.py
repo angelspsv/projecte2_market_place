@@ -7,6 +7,7 @@ from typing import Optional
 from connection import connexio_db
 from functions import *
 
+# fer correr l'api: 'fastapi dev main.py' o també 'uvicorn main:app --reload'
 
 app = FastAPI()
 
