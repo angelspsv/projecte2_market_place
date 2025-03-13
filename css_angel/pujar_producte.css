@@ -39,6 +39,7 @@ body {
 
 .btn:hover {
     background-color: #3a833d;
+    color: white;
 }
 
 /* boto actiu (color + foscor i sense hover) */
@@ -46,4 +47,57 @@ body {
     background-color: #3a833d;
     cursor: default;
     pointer-events: none;
+    color: white;
+}
+
+#formulari_pujar_producte {
+    width: 50%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Estilos para etiquetas y campos de entrada */
+#formulari_pujar_producte label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: left;
+}
+
+#formulari_pujar_producte input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Estilos para el botón de envío */
+#formulari_pujar_producte button {
+    width: 100%;
+    background-color: #6BED8D;
+    color: black;
+    font-weight: bold;
+    padding: 12px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#formulari_pujar_producte button:hover {
+    background-color: #3a833d;
+    color: white;
+}
+
+/* Ajustes para los placeholders */
+#formulari_pujar_producte input::placeholder {
+    font-size: 12px;
+    color: #888;
 }

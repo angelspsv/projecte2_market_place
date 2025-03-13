@@ -25,38 +25,16 @@ body {
     margin-right: 10px;
 }
 
-/* Asegura que el botón "Cercar" sea igual a los demás */
-#per_input_i_boto {
-    width: 100%;
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    align-items: center;
-    margin-top: 100px;
-}
-
-.input-text {
-    padding: 10px;
-    border: 2px solid #080808;
-    border-radius: 5px;
-    font-size: 16px;
-    width: 500px;
-    outline: none;
-    background-color: white;
-}
-
 .btn {
     text-decoration: none;
     background-color: #6BED8D;
-    padding: 12px 17px;
+    padding: 10px 15px;
     border-radius: 5px;
     color: black;
     font-weight: bold;
-    font-size: 16px; /* Igualado al resto de botones */
     /* border: 1px solid gray; */
     transition: background 0.3s;
     cursor: pointer;
-    border: none;
 }
 
 .btn:hover {
@@ -64,9 +42,10 @@ body {
     color: white;
 }
 
-.icono-cistella {
-    width: 24px; /* Ajusta el tamaño del ícono */
-    height: 24px;
-    vertical-align: middle; /* Alineación correcta */
+/* boto actiu (color + foscor i sense hover) */
+.btn.active {
+    background-color: #3a833d;
+    cursor: default;
+    pointer-events: none;
+    color: white;
 }
-

@@ -82,13 +82,15 @@ input {
     font-size: 1em;
     cursor: pointer;
     background-color: #4CAF50;
-    color: white;
+    color: black;
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
 #per_botons button:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #3a833d;
+    color: white;
 }
 
 /* link per recuperar la contrasenya */
