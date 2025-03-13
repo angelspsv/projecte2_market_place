@@ -39,4 +39,5 @@ body {
 
 .btn:hover {
     background-color: #3a833d;
+    color: white;
 }

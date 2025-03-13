@@ -39,6 +39,7 @@ body {
 
 .btn:hover {
     background-color: #3a833d;
+    color: white;
 }
 
 /* boto actiu (color + foscor i sense hover) */
@@ -46,4 +47,5 @@ body {
     background-color: #3a833d;
     cursor: default;
     pointer-events: none;
+    color: white;
 }

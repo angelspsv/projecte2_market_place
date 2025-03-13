@@ -61,6 +61,7 @@ body {
 #per_botons button:hover {
     transform: scale(1.1);
     background-color: #3a833d;
+    color: white;
 }
 
 /* Responsive para móviles */
