@@ -8,8 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //fem un array amb el text dels botons i les urls
     const buttons = [
-        { text: "Les meves dades", link: "meves_dades.html" },
-        { text: "Les meves comandes", link: "meves_comandes.html" },
+        { text: "Les meves dades", link: "dades_comprador.html" },
+        { text: "Les meves comandes", link: "comprador_comandes.html" },
         { text: "Tancar sessió", link: "tancar_sessio.html" },
         { imgSrc: "imatges_angel/216477_shopping_cart_icon.png", link: "cistella.html" }
         // { text: "Cistella", link: "cistella.html" } //en cop del text podem posar l'imatge d'un carreto
@@ -31,9 +31,6 @@ document.addEventListener("DOMContentLoaded", function () {
             btnElement.textContent = button.text;
         }
 
-        //btnElement.textContent = button.text;
-        //btnElement.href = button.link;
-        //btnElement.classList.add("btn");
         //inserim els botons al contenidor creat per aquests
         buttonsContainer.appendChild(btnElement);
     });
@@ -57,8 +54,6 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log('està cercant productes...');
     });
     contenidor.appendChild(boto_cerca);
-
-    
 });
 
 
