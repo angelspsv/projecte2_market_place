@@ -24,6 +24,29 @@ def users_schema(users) -> dict:
 
 
 
+# metode READ / GET per retornar tots els usuaris
+def read_usuaris():
+    try:
+        conn = connexio_db()
+        if not conn:  
+            raise HTTPException(status_code=500, detail="No connection data base")  
+        
+        cursor = conn.cursor()  
+        cursor.execute("SELECT * FROM usuaris")
+        usuaris = cursor.fetchall()
+
+        return usuaris
+
+    except mysql.connector.Error as e:
+        raise HTTPException(status_code=500, detail=f"Error en obtenir els usuaris: {e}")
+    
+    finally:
+        if conn.is_connected():
+            cursor.close()
+            conn.close()
+
+
+
 # metode READ / GET per obtenir les dades d'un usuari
 def read_usuari(id):
     try:
