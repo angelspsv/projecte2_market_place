@@ -3,20 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menú inici</title>
+    <title>Les meves dades</title>
     <link rel="stylesheet" href="css_angel/dades_venedor.css">
 </head>
 <body>
     <div class="header">
         <!-- espai per inserir salutacio al usuari -->
-        <span class="welcome">Hola, <span class="username"></span>!</span>
+        <div class="logo-saludo">
+            <div id="logo_home"></div>
+            <!-- espai per inserir salutacio al usuari -->
+            <span class="welcome">Hola, <span class="username"></span>!</span>
+        </div>
         
         <!-- espai pels botons de les funcionalitats -->
         <div id="buttons-container"></div>
     </div>
     
     <!-- aqui es veura les dades del usuari-->
-    <div id="dades_venedor"></div>
+    <div id="dades_venedor">
+        <p>Aqui l'usuari VENEDOR veura les seves dades</p>
+    </div>
 
     <script src="js_angel/dades_venedor.js"></script>
 </body>

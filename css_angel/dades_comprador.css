@@ -1,0 +1,109 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f8f8f8;
+    padding: 15px;
+    /* border: 2px solid black; */
+}
+
+.welcome {
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+#buttons-container {
+    display: flex;
+    gap: 10px;
+    margin-right: 10px;
+}
+
+/* Asegura que el botón "Cercar" sea igual a los demás */
+#per_input_i_boto {
+    width: 100%;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.input-text {
+    padding: 10px;
+    border: 2px solid #080808;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 500px;
+    outline: none;
+    background-color: white;
+}
+
+.btn {
+    text-decoration: none;
+    background-color: #6BED8D;
+    padding: 12px 17px;
+    border-radius: 5px;
+    color: black;
+    font-weight: bold;
+    font-size: 16px; /* Igualado al resto de botones */
+    /* border: 1px solid gray; */
+    transition: background 0.3s;
+    cursor: pointer;
+    border: none;
+}
+
+.btn:hover {
+    background-color: #3a833d;
+    color: white;
+}
+
+.icono-cistella {
+    width: 24px; /* Ajusta el tamaño del ícono */
+    height: 24px;
+    vertical-align: middle; /* Alineación correcta */
+}
+
+
+.btn.active {
+    background-color: #3a833d; /* Color del hover */
+    color: white;
+    pointer-events: none; /* Evita clics */
+}
+
+
+
+/* Contenidor logo */
+#logo_home {
+    /* position: absolute;  */
+    top: 10px;           
+    left: 10px;          
+    cursor: pointer;     
+}
+
+/* Estil logo */
+#logo_home img {
+    width: 80px;  
+    height: 80px; 
+    object-fit: contain; /* Assegura que la imatgen no es distorsiones */
+    transition: transform 0.2s ease-in-out; /* Efecte suau */
+}
+
+/* Efecte hover imatge */
+#logo_home img:hover {
+    transform: scale(1.1); /* Augmenta ligerament la mida al pasar el mouse */
+}
+
+.logo-saludo {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Ajusta la separación entre el logo y el saludo */
+}
+
+

@@ -73,8 +73,8 @@ btn_inici_sessio.addEventListener('click', function(){
     //get de mail del usuari, si existeix el mail que retorni la contrasenya
     //faig una comparació d'ambdues contrasenyes, si son la mateixa -> sessió iniciada
     //amb la contrasenya confirmada TRUE:
-    // if (tipus_usuaris == 1) -> window.location.href = 'comprador_menu_inici.html';
-    // if (tipus_usuaris == 0) -> window.location.href = 'venedor_menu_inici.html';
+    // if (tipus_usuaris == 0) -> window.location.href = 'comprador_menu_inici.html';
+    // if (tipus_usuaris == 1) -> window.location.href = 'venedor_menu_inici.html';
 
 
 

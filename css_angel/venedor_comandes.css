@@ -48,3 +48,30 @@ body {
     cursor: default;
     pointer-events: none;
 }
+
+/* Contenidor logo */
+#logo_home {
+    /* position: absolute;  */
+    top: 10px;           
+    left: 10px;          
+    cursor: pointer;     
+}
+
+/* Estil logo */
+#logo_home img {
+    width: 80px;  
+    height: 80px; 
+    object-fit: contain; /* Assegura que la imatgen no es distorsiones */
+    transition: transform 0.2s ease-in-out; /* Efecte suau */
+}
+
+/* Efecte hover imatge */
+#logo_home img:hover {
+    transform: scale(1.1); /* Augmenta ligerament la mida al pasar el mouse */
+}
+
+.logo-saludo {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Ajusta la separación entre el logo y el saludo */
+}

@@ -3,21 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menú inici</title>
+    <title>Les meves comandes</title>
     <link rel="stylesheet" href="css_angel/venedor_comandes.css">
 </head>
 <body>
     
     <div class="header">
         <!-- espai per inserir salutacio al usuari -->
-        <span class="welcome">Hola, <span class="username"></span>!</span>
+        <div class="logo-saludo">
+            <div id="logo_home"></div>
+            <!-- espai per inserir salutacio al usuari -->
+            <span class="welcome">Hola, <span class="username"></span>!</span>
+        </div>
         
         <!-- espai pels botons de les funcionalitats -->
         <div id="buttons-container"></div>
     </div>
     
     <!-- aqui es veuran les comandes fetes al venedor -->
-    <div id="comandes_venedor"></div>
+    <div id="comandes_venedor">
+        <p>Aqui apareixeran les comandes que te el venedor</p>
+    </div>
 
     <script src="js_angel/venedor_comandes.js"></script>
 </body>

@@ -1,6 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
     const buttonsContainer = document.getElementById("buttons-container");
 
+
+    //faig el logo-home que si rep click portara el usuari a la pagina index / inici
+    const logo = document.createElement('img');
+    logo.src = 'imatges_angel/sprout_346246.png';
+    logo.alt = 'GO to home';
+    logo.addEventListener('click', function(){
+    window.location.href = 'venedor_menu_inici.html';
+    });
+    document.getElementById('logo_home').appendChild(logo);
+
+
+
     //salutacio usuari
     let nom = 'Angel'; //haura d'agafar el nom real de l'usuari
     const nom_usuari = document.querySelector('.username');
