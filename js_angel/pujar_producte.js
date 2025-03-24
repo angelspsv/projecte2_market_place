@@ -49,60 +49,57 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     const accioButton = document.querySelector('.submit-btn');
-        if (accioButton) {
-            console.log('Botón encontrado');
-            accioButton.addEventListener('click', function(event){
-                //evitem que la pagina es regarregues
-                event.preventDefault(); 
-                console.log('Botón clicado');
+    if (accioButton){
+        console.log('Botón encontrado');
+        accioButton.addEventListener('click', function(event){
+            //evitem que la pagina es regarregues
+            event.preventDefault(); 
+            console.log('Botón clicado');
 
-                //agafem les dades des dels camps del formulari 
-                const nom_producte = document.getElementById("nom_producte").value.trim().toLowerCase();
-                const descripcio_producte = document.getElementById("descripcio_producte").value.trim().toLowerCase();
-                //agafem el valor del preu
-                let precio = document.getElementById("preu").value.trim();
-                if(!precio){
-                    alert("Preu no introduït!");
-                    return;
-                }       
-                const preu = comprovacioPreu(precio);
-                //si el preu es menor a 0 => valor entrat com preu es incorrecte
-                if(preu < 0){
-                    alert("Preu introduït no vàlid!");
-                    return;
-                }
-                const quantitat_disponible = document.getElementById("quantitat_disponible").value;
-                const url_imatge = document.getElementById("url_imatge").value
+            //agafem les dades des dels camps del formulari 
+            const nom_producte = document.getElementById("nom_producte").value.trim().toLowerCase();
+            const descripcio_producte = document.getElementById("descripcio_producte").value.trim().toLowerCase();
+            //agafem el valor del preu
+            let precio = document.getElementById("preu").value.trim();
+            if(!precio){
+                alert("Preu no introduït!");
+                return;
+            }       
+            const preu = comprovacioPreu(precio);
+            //si el preu es menor a 0 => valor entrat com preu es incorrecte
+            if(preu < 0){
+                alert("Preu introduït no vàlid!");
+                return;
+            }
+            const quantitat_disponible = document.getElementById("quantitat_disponible").value;
+            const url_imatge = document.getElementById("url_imatge").value
 
+            //si hi ha camps buits => missatge d'avis
+            if (!nom_producte || !descripcio_producte || !preu || !quantitat_disponible || !url_imatge) {
+                alert("No pot haver camps buits!");
+                return;
+            }
 
-                //si hi ha camps buits => missatge d'avis
-                if (!nom_producte || !descripcio_producte || !preu || !quantitat_disponible || !url_imatge) {
-                    alert("No pot haver camps buits!");
-                    return;
-                }
+            // Capturar els valors del formulari
+            const formData = {
+                nom_producte: document.getElementById("nom_producte").value,
+                descripcio_producte: document.getElementById("descripcio_producte").value,
+                preu: document.getElementById("preu").value,
+                quantitat_disponible: document.getElementById("quantitat_disponible").value,
+                url_imatge: document.getElementById("url_imatge").value
+            };
 
+            console.log("Dades del formulari:", formData);
 
-                // Capturar els valors del formulari
-                const formData = {
-                    nom_producte: document.getElementById("nom_producte").value,
-                    descripcio_producte: document.getElementById("descripcio_producte").value,
-                    preu: document.getElementById("preu").value,
-                    quantitat_disponible: document.getElementById("quantitat_disponible").value,
-                    url_imatge: document.getElementById("url_imatge").value
-                };
-
-                console.log("Dades del formulari:", formData);
-
-                // Aquí podrías hacer una petición fetch si fuera necesario
+            // Aquí podrías hacer una petición fetch si fuera necesario
 
 
-                //i finalment conduir l'usuari a una altra pagina o mostrar un missatge
+            //i finalment conduir l'usuari a una altra pagina o mostrar un missatge
 
-            });
-        } else {
-            console.log('Botón no encontrado');
-        }
-    
+        });
+    }else{
+        console.log('Botón no encontrado');
+    }
 });
 
 
