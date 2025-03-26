@@ -1,8 +1,9 @@
-from connection import *
 from fastapi import HTTPException
+from mysql import connector as mysql_connector
+from connection_roc import get_db_conection
 
 
-#rep una tupla i retorna un diccionari de usuari
+# Rep una tupla i retorna un diccionari d'usuari
 def user_schema(user) -> dict:
     return {
         "id_usuari": user[0],
@@ -18,72 +19,152 @@ def user_schema(user) -> dict:
     }
 
 
-# rep una tupla d'usuaris i retorna una lista de diccionaris
-def users_schema(users) -> dict:
-    return [user_schema(user) for user in users]
+# Rep una tupla d'usuaris i retorna una lista de diccionaris
+def users_schema(uresult) -> dict:
+    return [user_schema(user) for user in uresult]
 
 
+# <----- MÈTODES READ ----->
 
-# metode READ / GET per obtenir les dades d'un usuari
+# Aquest mètode obté les dades de tots els usuaris
+def read_usuaris():
+    try:
+        result = get_db_conection()
+
+        if isinstance(result, dict) and result.get("status") == -1:
+            return result
+
+        conn, tunnel = result
+
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM usuaris")
+        usuaris = cursor.fetchall()
+
+        return users_schema(usuaris)
+
+    except mysql_connector.Error as e:
+        raise HTTPException(
+            status_code=500, detail=f"Error en obtenir els usuaris: {e}"
+        )
+
+    finally:
+        if "conn" in locals() and conn:
+            conn.close()
+        if "tunnel" in locals() and tunnel:
+            tunnel.stop()
+
+
+# Aquest mètode obté les dades d'un usuari amb una ID determinada
 def read_usuari(id):
     try:
-        conn = connexio_db()
-        if not conn:  
-            raise HTTPException(status_code=500, detail="No connection data base")  
-        # fem la query i l'executem
-        cursor = conn.cursor()  
+        result = get_db_conection()
+
+        if isinstance(result, dict) and result.get("status") == -1:
+            return result
+
+        conn, tunnel = result
+
+        # Fem la query i l'executem
+        cursor = conn.cursor()
         cursor.execute("SELECT * FROM usuaris WHERE id = %s", (id,))
         usuari = cursor.fetchone()
-        
-        #si no existeix l'usuari amb id X executa excepció
-        if usuari is None:
-            raise HTTPException(status_code=404, detail='ID usuari not found')
-        # retornem l'usuari
-        return usuari
 
-    except mysql.connector.Error as e:
-        raise HTTPException(status_code=500, detail=f"Error en obtenir els usuaris: {e}")
+        # Si no existeix l'usuari amb id X executa excepció
+        if usuari is None:
+            raise HTTPException(status_code=404, detail="No existeix un usuari amb aquesta ID.")
+
+        # Retornem l'usuari
+        return user_schema(usuari)
+
+    except mysql_connector.Error as e:
+        raise HTTPException(status_code=500, detail=f"Error en obtenir l'usuari: {e}")
+
+    finally:
+        if "conn" in locals() and conn:
+            conn.close()
+        if "tunnel" in locals() and tunnel:
+            tunnel.stop()
+
+
+# <----- MÈTODES CREATE ----->
+
+# Aquest mètode insereix un nou usuari a la taula usuaris
+def create_usuari(usuari):
+    try:
+        result = get_db_conection()
+
+        if isinstance(result, dict) and result.get("status") == -1:
+            return result
+        
+        conn, tunnel = result
+        cursor = conn.cursor()
+        
+        # Preparem l'insert per la taula
+        cursor.execute(
+            "INSERT INTO usuaris (dni, nom, cognom, email, contrasenya, telefon, comarca, tipus_usuaris, compte_banc) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
+            (
+                usuari.dni,
+                usuari.nom,
+                usuari.cognom,
+                usuari.email,
+                usuari.contrasenya,
+                usuari.telefon,
+                usuari.comarca,
+                usuari.tipus_usuaris,
+                usuari.compte_banc,
+            ),
+        )
+        
+        # Desem els canvis a la taula/BBDD
+        conn.commit()
+        
+        return {"message": "Nou usuari inserit amb èxit."}
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error a la BBDD: {str(e)}")
     
     finally:
-        if conn.is_connected():
-            cursor.close()
+        if "conn" in locals() and conn:
             conn.close()
+        if "tunnel" in locals() and tunnel:
+            tunnel.stop()
 
 
-
-
-# inserim un nou usuari a la taula usuaris
-def insert_new_user(usuari):
-    try:
-        #connectem a la bbdd
-        conn = connexio_db()
-        cur = conn.cursor()
-        #preparem l'insert per la taula
-        cur.execute("INSERT INTO usuaris (dni, nom, cognom, email, contrasenya, telefon, comarca, tipus_usuaris, compte_banc) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (usuari.dni, usuari.nom, usuari.cognom, usuari.email, usuari.contrasenya, usuari.telefon, usuari.comarca, usuari.tipus_usuaris, usuari.compte_banc))
-        #desem els canvis a la taula/bbdd
-        conn.commit()
-        return {"message" : "inserit nou usuari amb exit"}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f'Error a la bbdd: {str(e)}')
-    finally:
-        cur.close()
-        conn.close()
-
-
-
-# insert de nou producte a la base de dades
-def insert_nou_producte(producte):
-    try:
-        #connectem a la bbdd
-        conn = connexio_db()
-        cur = conn.cursor()
-        #preparem l'insert per la taula
-        cur.execute("INSERT INTO productes (id_vendedor, nom, descripcio, preu, stock) VALUES (%s, %s, %s, %s, %s)", (producte.id_vendedor, producte.nom, producte.descripcio, producte.preu, producte.stock))
-        #desem els canvis a la taula/bbdd
-        conn.commit()
-        return {"message" : "inserit nou producte amb exit"}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f'Error a la bbdd: {str(e)}')
-    finally:
-        cur.close()
-        conn.close()
+# Aquest mètode insereix un nou producte a la taula productes
+def create_producte(producte):
+        try:
+            result = get_db_conection()
+            
+            if isinstance(result, dict) and result.get("status") == -1:
+                return result
+            
+            conn, tunnel = result
+            
+            # Connectem a la BBDD
+            cursor = conn.cursor()
+            
+            # Preparem l'insert per la taula
+            cursor.execute(
+                "INSERT INTO productes (id_venedor, nom, descripcio, preu, stock) VALUES (%s, %s, %s, %s, %s)",
+                (
+                    producte.id_venedor,
+                    producte.nom,
+                    producte.descripcio,
+                    producte.preu,
+                    producte.stock,
+                ),
+            )
+            
+            # Desem els canvis a la taula/BBDD
+            conn.commit()
+            
+            return {"message": "Nou producte inserit amb èxit."}
+        
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Error a la BBDD: {str(e)}")
+        
+        finally:
+            if "conn" in locals() and conn:
+                conn.close()
+            if "tunnel" in locals() and tunnel:
+                tunnel.stop()

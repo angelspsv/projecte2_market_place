@@ -1,10 +1,7 @@
-from fastapi import FastAPI, Form, HTTPException
+from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-import mysql.connector
-from typing import Union, List
-from typing import Optional
-from connection import connexio_db
+from typing import List
 from functions import *
 
 # fer correr l'api: 'fastapi dev main.py' o també 'uvicorn main:app --reload'
@@ -24,42 +21,22 @@ app.add_middleware(
 
 @app.get("/")
 def read_root():
-    return {"Hello" : "World"}
+    return {"Hello": "World"}
 
 
-#endpoint per veure tots els usuaris
+# Endpoint per veure tots els usuaris
 @app.get("/usuaris", response_model=List[dict])
-async def obtenir_usuaris():
-    try:
-        conn = connexio_db()
-        if not conn:  
-            raise HTTPException(status_code=500, detail="No connection data base")  
-        
-        cursor = conn.cursor()  
-        cursor.execute("SELECT * FROM usuaris")
-        usuaris = cursor.fetchall()
-
-        return users_schema(usuaris)
-
-    except mysql.connector.Error as e:
-        raise HTTPException(status_code=500, detail=f"Error en obtenir els usuaris: {e}")
-    
-    finally:
-        if conn.is_connected():
-            cursor.close()
-            conn.close()
+async def veure_usuaris():
+    return read_usuaris()
 
 
-
-#enpoint per retornar un usuari amb totes les seves dades a partir del seu ID
-@app.get("/usuari/{id}", response_model= dict)
+# Enpoint per retornar un usuari amb totes les seves dades a partir del seu ID
+@app.get("/usuari/{id}", response_model=dict)
 async def retornar_usuari(id: int):
-    usuari_data = read_usuari(id)
-    return user_schema(usuari_data)
+    return read_usuari(id)
 
 
-
-#per validar les dades abans del POST/insert
+# Validar les dades abans del POST/insert
 class Usuari(BaseModel):
     dni: str
     nom: str
@@ -70,27 +47,27 @@ class Usuari(BaseModel):
     comarca: str
     tipus_usuaris: bool
     compte_banc: str
-    
 
-#endpoint nou_usuari
+
+# Endpoint nou_usuari
 @app.post("/nou_usuari/", response_model=dict)
-async def create_usuari(usuari: Usuari):
-    resultat_insert = insert_new_user(usuari)
+async def nou_usuari(usuari: Usuari):
+    resultat_insert = create_usuari(usuari)
     return resultat_insert
 
 
-# per validar les dades de Producte abans del POST/insert
+# Validar les dades de Producte abans del POST/insert
 class Producte(BaseModel):
-    id: int
-    id_vendedor: int
+    id_venedor: int
     nom: str
     descripcio: str
     preu: float
     stock: int
+    url_imatge: str
 
 
-# endpoint nou producte (POST/INSERT) a la taula productes
+# Endpoint nou producte (POST/INSERT) a la taula productes
 @app.post("/nou_producte/", response_model=dict)
-async def create_producte(producte: Producte):
-    result = insert_nou_producte(producte)
+async def nou_producte(producte: Producte):
+    result = create_producte(producte)
     return result
