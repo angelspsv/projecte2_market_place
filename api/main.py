@@ -48,7 +48,7 @@ class Usuari(BaseModel):
     dni: str
     nom: str
     cognom: str
-    correu: str
+    email: str
     contrasenya: str
     telefon: int
     comarca: str

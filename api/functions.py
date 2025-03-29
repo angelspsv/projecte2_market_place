@@ -9,7 +9,7 @@ def user_schema(user) -> dict:
         "dni": user[1],
         "nom": user[2],
         "cognom": user[3],
-        "correu": user[4],
+        "email": user[4],
         "contrasenya": user[5],
         "telefon": user[6],
         "comarca": user[7],
@@ -101,7 +101,7 @@ def insert_nou_producte(producte):
         conn = connexio_db()
         cur = conn.cursor()
         #preparem l'insert per la taula
-        cur.execute("INSERT INTO productes (id_vendedor, nom, descripcio, preu, stock) VALUES (%s, %s, %s, %s, %s)", (producte.id_vendedor, producte.nom, producte.descripcio, producte.preu, producte.stock))
+        cur.execute("INSERT INTO productes (id_vendedor, nom, descripcio, preu, stock, url_imatge) VALUES (%s, %s, %s, %s, %s, %s)", (producte.id_vendedor, producte.nom, producte.descripcio, producte.preu, producte.stock, producte.url_imatge))
         #desem els canvis a la taula/bbdd
         conn.commit()
         return {"message" : "inserit nou producte amb exit"}
