@@ -6,34 +6,11 @@ from typing import Union, List
 from typing import Optional
 from connection import connexio_db
 from functions import *
-from sshtunnel import SSHTunnelForwarder
-import sshtunnel
+
 
 # fer correr l'api: 'fastapi dev main.py' o també 'uvicorn main:app --reload'
 
 app = FastAPI()
-
-
-#SSH_HOST = "10.2.169.237"
-#SSH_PORT = 22
-#SSH_USERNAME = "isard"
-#SSH_PASSWORD = "pirineus"
-#MYSQL_HOST = "192.168.200.10"
-#MYSQL_PORT = 3306
-
-
-
-# Crear el túnel 
-#tunnel = sshtunnel.SSHTunnelForwarder( 
-    #(SSH_HOST, SSH_PORT), 
-    #ssh_username=SSH_USERNAME, 
-    #ssh_password=SSH_PASSWORD, 
-    #remote_bind_address=(MYSQL_HOST, MYSQL_PORT), 
-    #local_bind_address=('127.0.0.1', 3306))
-
-# Iniciar el túnel
-#tunnel.start() 
-
 
 
 # Configuración de CORS (si la app está en otro dominio o puerto)
@@ -71,7 +48,7 @@ class Usuari(BaseModel):
     dni: str
     nom: str
     cognom: str
-    email: str
+    correu: str
     contrasenya: str
     telefon: int
     comarca: str
@@ -88,12 +65,12 @@ async def create_usuari(usuari: Usuari):
 
 # per validar les dades de Producte abans del POST/insert
 class Producte(BaseModel):
-    id: int
     id_vendedor: int
     nom: str
     descripcio: str
     preu: float
     stock: int
+    url_imatge: str
 
 
 # endpoint nou producte (POST/INSERT) a la taula productes

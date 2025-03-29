@@ -12,11 +12,6 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('logo_home').appendChild(logo);
 
 
-
-
-
-
-
     // Salutació usuari
     let nom = "Angel"; // haura d'agafar el nom real de l'usuari
     const nom_usuari = document.querySelector(".username");
@@ -43,18 +38,24 @@ document.addEventListener("DOMContentLoaded", function () {
             let imgElement = document.createElement("img");
             imgElement.src = button.imgSrc;
             imgElement.alt = "Carrito";
-            imgElement.classList.add("icono-cistella"); // Afegim classe CSS
+            imgElement.classList.add("icono-cistella"); //afegim classe CSS
             btnElement.appendChild(imgElement);
         } else {
             btnElement.textContent = button.text;
         }
 
-        // Si el botó és el de la pàgina actual, afegim classe "active" i eliminem l'enllaç
+        //si el boto es el de la pagina actual, afegim classe "active" i eliminem l'enllaç
         if (currentPage === button.link) {
             btnElement.classList.add("active");
-            btnElement.removeAttribute("href"); // Evita que l'usuari pugui fer clic de nou
+            btnElement.removeAttribute("href"); //evita que l'usuari pugui fer clic de nou
         }
-
         buttonsContainer.appendChild(btnElement);
     });
+
+
+    //----------------------------a partir d'aqui la resta de codi
+    //al final de tot hauria de redirigir l'usuari a
+    //               cistella_pagament.html
+
+
 });
