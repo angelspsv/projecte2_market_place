@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 from functions import *
 
+# fer correr l'api: 'fastapi dev main.py' o també 'uvicorn main:app --reload'
 
 app = FastAPI()
 

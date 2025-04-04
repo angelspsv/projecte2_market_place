@@ -85,12 +85,17 @@ input, select {
 /* Botón de Crear */
 #botons button[type="submit"] {
     background-color: #4CAF50;
-    color: white;
+    color: black;
 }
 
 /* Botón de Volver */
 #botons button#tornar {
     background-color: #e74c3c;
+    color: black;
+}
+
+#botons button#tornar:hover {
+    background-color: #ab2e20; /* Rojo más oscuro */
     color: white;
 }
 
@@ -98,6 +103,8 @@ input, select {
 #botons button:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #3a833d;
+    color: white;
 }
 
 /* Responsivo para móviles */
