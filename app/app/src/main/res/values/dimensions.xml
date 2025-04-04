@@ -3,6 +3,7 @@
 
     <!-- Manrope -->
     <dimen name="manrope_text_size">20sp</dimen>
+    <dimen name="manrope_form_text_size">15sp</dimen>
     <dimen name="manrope_outer_text_size">25sp</dimen>
     <dimen name="manrope_mini_text_size">10sp</dimen>
 

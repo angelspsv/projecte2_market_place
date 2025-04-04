@@ -53,7 +53,7 @@
     </style>
 
     <style name="inner_form_text" parent="default_widget_text">
-        <item name="android:textSize">@dimen/manrope_text_size</item>
+        <item name="android:textSize">@dimen/manrope_form_text_size</item>
         <item name="android:gravity">start</item>
     </style>
 
