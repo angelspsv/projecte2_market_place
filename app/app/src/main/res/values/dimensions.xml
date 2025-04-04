@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Manrope -->
+    <dimen name="manrope_text_size">20sp</dimen>
+    <dimen name="manrope_form_text_size">15sp</dimen>
+    <dimen name="manrope_outer_text_size">25sp</dimen>
+    <dimen name="manrope_mini_text_size">10sp</dimen>
+
+    <!-- Kanit -->
+    <dimen name="kanit_title_text_size">35sp</dimen>
+
+    <!-- Nav bar -->
+    <dimen name="nav_vertical_padding">8dp</dimen>
+    <dimen name="nav_icon_size">40dp</dimen>
+
+</resources>

@@ -135,3 +135,4 @@ def insert_nou_producte(producte):
     finally:
         cur.close()
         conn.close()
+
