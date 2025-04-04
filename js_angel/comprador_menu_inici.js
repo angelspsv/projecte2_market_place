@@ -1,10 +1,37 @@
+function getCookie(name) {
+    let value = "; " + document.cookie;
+    let parts = value.split("; " + name + "=");
+    if (parts.length === 2) {
+        let cookieValue = parts.pop().split(";").shift();
+        console.log(`Cookie ${name}:`, cookieValue);  // Esto te ayudará a verificar si la cookie está presente
+        return cookieValue;
+    }
+    console.log(`Cookie ${name} no encontrada`);
+    return null;
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     const buttonsContainer = document.getElementById("buttons-container");
+
+    //recuperem les dades de la cookie
+    const userEmail = getCookie('user_email');
+    const userName = getCookie('user_name');
+    const userSurname = getCookie('user_surname');
+    const userType = getCookie('user_type');
+
     
     //salutacio usuari
-    let nom = 'Angel'; //haura d'agafar el nom real de l'usuari
+    let nom = userName;      //'Angel'; //haura d'agafar el nom real de l'usuari
     const nom_usuari = document.querySelector('.username');
-    nom_usuari.textContent = nom.toUpperCase();
+    //nom_usuari.textContent = nom.toUpperCase();
+
+
+    if (nom_usuari && nom) {
+        nom_usuari.textContent = nom.toUpperCase();
+    } else {
+        console.error('Problema amb el nom de usuari');
+    }
+
 
     //fem un array amb el text dels botons i les urls
     const buttons = [
