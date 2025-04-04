@@ -30,7 +30,7 @@
         app:srcCompat="@drawable/app_logo" />
 
     <Button
-        android:id="@+id/start_login"
+        android:id="@+id/login_button"
         style="@style/inner_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
