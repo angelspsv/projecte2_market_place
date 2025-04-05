@@ -78,13 +78,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 document.cookie = `user_email=${userData.email}; path=/;`;
                 document.cookie = `user_name=${userData.nom}; path=/;`;
-                document.cookie = `user_surname=${userData.cognom}; path=/;`;
-                document.cookie = `user_type=${userData.tipus_usuaris}; path=/;`;
+                document.cookie = `user_type=${userData.tipus_usuaris}; path=/`;
 
                 //desar dades de l'usuari en cookies
                 setCookie('user_email', userData.email);
                 setCookie('user_name', userData.nom);
-                setCookie('user_surname', userData.cognom);
                 setCookie('user_type', userData.tipus_usuaris);
 
 
