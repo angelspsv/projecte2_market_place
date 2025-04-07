@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nou producte</title>
+    <link rel="stylesheet" href="css_angel/pujar_producte.css">
+</head>
+<body>
+
+    <div class="header">
+        <!-- espai per inserir salutacio al usuari -->
+        <div class="logo-saludo">
+            <div id="logo_home"></div>
+            <!-- espai per inserir salutacio al usuari -->
+            <span class="welcome"><span class="username"></span>!</span>
+        </div>
+
+        <!-- espai pels botons de les funcionalitats -->
+        <div id="buttons-container"></div>
+    </div>
+
+    <div id="formulari_pujar_producte" class="form-container">
+        <h2>Nou producte</h2>
+        <form id="nou_producte_form">
+            <div class="form-group">
+                <label for="nom_producte">Nom producte:</label>
+                <input type="text" id="nom_producte" name="nom_producte" required>
+            </div>
+
+            <div class="form-group">
+                <label for="descripcio_producte">Descripció producte:</label>
+                <input type="text" id="descripcio_producte" name="descripcio_producte" placeholder="Màxim 50 caràcters" required>
+            </div>
+
+            <div class="form-group">
+                <label for="preu">Preu:</label>
+                <input type="text" id="preu" name="preu" placeholder="Per unitat o kilo (kg)" required>
+            </div>
+
+            <div class="form-group">
+                <label for="quantitat_disponible">Quantitat disponible (uds / kgs):</label>
+                <input type="number" id="quantitat_disponible" name="quantitat_disponible" required>
+            </div>
+
+            <div class="form-group">
+                <label for="url_imatge">Url imatge:</label>
+                <input type="url" id="url_imatge" name="url_imatge" required>
+            </div>
+
+            <button type="submit" class="submit-btn">CREAR NOU PRODUCTE</button>
+        </form>
+    </div>
+
+    <script src="js_angel/pujar_producte.js"></script>
+</body>
+</html>
