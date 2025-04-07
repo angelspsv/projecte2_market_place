@@ -12,16 +12,6 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('logo_home').appendChild(logo);
 
 
-
-
-
-
-
-    // Salutació usuari
-    let nom = "Angel"; // haura d'agafar el nom real de l'usuari
-    const nom_usuari = document.querySelector(".username");
-    nom_usuari.textContent = nom.toUpperCase();
-
     // Obtenim el nom del fitxer actual
     const currentPage = window.location.pathname.split("/").pop();
 
@@ -65,6 +55,50 @@ document.addEventListener("DOMContentLoaded", function () {
             window.location.href = "comprador_menu_inici.html"; // redirigeix al inici
         });
     }
+
+
+    //codi per recuperar la cookie
+    function getCookie(name) {
+        let value = "; " + document.cookie;
+        let parts = value.split("; " + name + "=");
+        if (parts.length === 2) {   
+            let cookieValue = parts.pop().split(";").shift();
+            console.log(`Cookie ${name} trobada:`, cookieValue);  //verifiquem que la coookie hi es
+            return cookieValue;
+        }
+        console.log(`Cookie ${name} no encontrada`);
+        return null;
+    }
+
+
+
+    // Recuperar las cookies
+    const userEmail = getCookie('user_email');
+    const userName = getCookie('user_name');
+    const userType = getCookie('user_type');
+    const userId = getCookie('user_id');
+
+    console.log('Email:', userEmail);
+    console.log('Nombre:', userName);
+    console.log('Tipo de usuario:', userType);
+    console.log('ID usuari:', userId);
+
+
+
+    //salutacio usuari
+    let nom = userName;  //hauria de retornar el nom del usuari
+    const nom_usuari = document.querySelector('.username');
+
+    //si nom i nom_usuari no son buits, mostrem l'opcio del IF
+    if (nom_usuari && nom) {
+        nom_usuari.textContent = `Hola, ${nom.toUpperCase()}`;
+    } else {
+        console.error('Problema con el nombre del usuario');
+        nom_usuari.textContent = 'Hola!';
+    }
+
+
+
 
 
     //codi pel formulari de pagament

@@ -3,7 +3,7 @@ function getCookie(name) {
     let parts = value.split("; " + name + "=");
     if (parts.length === 2) {
         let cookieValue = parts.pop().split(";").shift();
-        console.log(`Cookie ${name} encontrada:`, cookieValue);  // Verifica si la cookie está presente
+        console.log(`Cookie ${name} encontrada:`, cookieValue);  //verifiquem que la coookie hi es
         return cookieValue;
     }
     console.log(`Cookie ${name} no encontrada`);
@@ -17,19 +17,24 @@ document.addEventListener("DOMContentLoaded", function () {
     const userEmail = getCookie('user_email');
     const userName = getCookie('user_name');
     const userType = getCookie('user_type');
+    const userId = getCookie('user_id');
 
     console.log('Email:', userEmail);
     console.log('Nombre:', userName);
     console.log('Tipo de usuario:', userType);
+    console.log('ID usuari:', userId);
+
+    
 
     // Saludo al usuario
     let nom = userName;  //'Angel'; // debería tomar el nombre real del usuario
     const nom_usuari = document.querySelector('.username');
 
     if (nom_usuari && nom) {
-        nom_usuari.textContent = nom.toUpperCase();
+        nom_usuari.textContent = `Hola, ${nom.toUpperCase()}`;
     } else {
         console.error('Problema con el nombre del usuario');
+        nom_usuari.textContent = `Hola!`;
     }
 
     // Crear botones dinámicamente

@@ -1,8 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const buttonsContainer = document.getElementById("buttons-container");
 
-
-
     //faig el logo-home que si rep click portara el usuari a la pagina index / inici
     const logo = document.createElement('img');
     logo.src = 'imatges_angel/sprout_346246.png';
@@ -13,16 +11,10 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('logo_home').appendChild(logo);
 
 
-
-    // Salutació usuari
-    let nom = "Angel"; // haura d'agafar el nom real de l'usuari
-    const nom_usuari = document.querySelector(".username");
-    nom_usuari.textContent = nom.toUpperCase();
-
-    // Obtenim el nom del fitxer actual
+    //obtenim el nom del fitxer actual per deshabilitar el boto corresponent
     const currentPage = window.location.pathname.split("/").pop();
 
-    // Fem un array amb el text dels botons i les urls
+    //fem un array amb el text dels botons i les urls
     const buttons = [
         { text: "Les meves dades", link: "dades_comprador.html" },
         { text: "Les meves comandes", link: "comprador_comandes.html" },
@@ -30,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
         { imgSrc: "imatges_angel/216477_shopping_cart_icon.png", link: "cistella_resum_comanda.html" }
     ];
 
-    // Bucle per generar dinàmicament els botons
+    //bucle per generar dinàmicament els botons
     buttons.forEach(button => {
         let btnElement = document.createElement("a");
         btnElement.href = button.link;
@@ -51,7 +43,48 @@ document.addEventListener("DOMContentLoaded", function () {
             btnElement.classList.add("active");
             btnElement.removeAttribute("href"); // Evita que l'usuari pugui fer clic de nou
         }
-
         buttonsContainer.appendChild(btnElement);
     });
+
+
+    //codi per recuperar la cookie
+    function getCookie(name) {
+        let value = "; " + document.cookie;
+        let parts = value.split("; " + name + "=");
+        if (parts.length === 2) {   
+            let cookieValue = parts.pop().split(";").shift();
+            console.log(`Cookie ${name} trobada:`, cookieValue);  //verifiquem que la coookie hi es
+            return cookieValue;
+        }
+        console.log(`Cookie ${name} no encontrada`);
+        return null;
+    }
+
+
+
+    //recuperar cookie
+    const userEmail = getCookie('user_email');
+    const userName = getCookie('user_name');
+    const userType = getCookie('user_type');
+    const userId = getCookie('user_id');
+
+    console.log('Email:', userEmail);
+    console.log('Nombre:', userName);
+    console.log('Tipo de usuario:', userType);
+    console.log('ID usuari:', userId);
+
+    //salutacio al usuari
+    let nom = userName;  //hauria de mostrar el nom del usuari real
+    const nom_usuari = document.querySelector('.username');
+
+    //si nom i nom_usuari no son buits, mostrem l'opcio del IF
+    if (nom_usuari && nom) {
+        nom_usuari.textContent = `Hola, ${nom.toUpperCase()}`;
+    } else {
+        console.error('Problema con el nombre del usuario');
+        nom_usuari.textContent = 'Hola!';
+    }
+
+
+    
 });

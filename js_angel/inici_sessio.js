@@ -76,11 +76,13 @@ document.addEventListener("DOMContentLoaded", function () {
             if (userData.contrasenya === passwd_entrat) {
                 alert('Sessió iniciada correctament!');
 
+                document.cookie = `user_id=${userData.id_usuari}; path=/;`;
                 document.cookie = `user_email=${userData.email}; path=/;`;
                 document.cookie = `user_name=${userData.nom}; path=/;`;
                 document.cookie = `user_type=${userData.tipus_usuaris}; path=/`;
 
                 //desar dades de l'usuari en cookies
+                setCookie('user_id', userData.id_usuari);
                 setCookie('user_email', userData.email);
                 setCookie('user_name', userData.nom);
                 setCookie('user_type', userData.tipus_usuaris);
