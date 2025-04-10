@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
     const buttonsContainer = document.getElementById("buttons-container");
 
     //faig el logo-home que si rep click portara el usuari a la pagina index / inici
@@ -91,6 +91,13 @@ document.addEventListener("DOMContentLoaded", function () {
     //realitzar la peticio GET per verificar l'existencia de l'usuari
     const user_data = obtenimDadesUsuari(userId);
 
+
+    //cridem la funcio per mostrar el formulari amb les dades del usuari
+    if (user_data) {
+        crearFormulari(user_data);
+    }else{
+        console.log("no arriben les dades");
+    }
         
 });
 
@@ -112,4 +119,17 @@ async function obtenimDadesUsuari(id){
     } catch (error) {
         console.log('error en el fetch', error.message);
     }
+}
+
+
+
+//funcio per crear el formulari amb les dades de l'usuari
+function crearFormulari(dades) {
+    const container = document.getElementById("dades_comprador");
+
+    //netegem el contenidor
+    container.innerHTML = '';
+
+    //crear formulari i mostrar les dades del usuari
+    
 }

@@ -83,8 +83,31 @@ document.addEventListener("DOMContentLoaded", function () {
         nom_usuari.textContent = 'Hola!';
     }
 
+    // ruta endpoint: /usuari/{id}
+    //fem el fetch amb el id de l'usuari per obtenir les dades de l'usuari i mostrar-les
+    //realitzar la peticio GET per verificar l'existencia de l'usuari
+    const user_data = obtenimDadesUsuari(userId);
 
 
-
-    //funcio per recuperar les dades de la api del usuari i mostrar-les
 });
+
+
+
+//fem el fetch amb el id de l'usuari per obtenir les dades de l'usuari i mostrar-les
+//realitzar la peticio GET per verificar l'existencia de l'usuari
+async function obtenimDadesUsuari(id){
+    try {
+        const response = await fetch(`http://127.0.0.1:8000/usuari/${id}`);
+
+        if (!response.ok) {
+            throw new Error('Usuari no trobat');
+        }
+
+        //obtenim les dades de l'usuari
+        const userData = await response.json();
+        console.log("Dades de l'usuari:", userData); //depuracio
+    
+    } catch (error) {
+        console.log('error en el fetch', error.message);
+    }
+}
