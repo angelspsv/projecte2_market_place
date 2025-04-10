@@ -57,7 +57,10 @@ function tancarSessio(){
     //demanem consentiment a l'usuari
     if (confirm('Vols tancar sessió?')){
         //reescriure la cookie amb data del passat
-        document.cookie = "usuari=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+        document.cookie = "user_name=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+        document.cookie = "user_id=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+        document.cookie = "user_email=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+        document.cookie = "user_type=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
 
         //redirigim l'usuari cap a la pagina d'inici
         window.location.href = 'index.html';
