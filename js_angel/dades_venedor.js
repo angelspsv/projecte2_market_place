@@ -106,8 +106,101 @@ async function obtenimDadesUsuari(id){
         //obtenim les dades de l'usuari
         const userData = await response.json();
         console.log("Dades de l'usuari:", userData); //depuracio
+
+        //cridem la funcio per mostrar les dades de l'usuari
+        mostrarDadesVenedor(userData);
     
     } catch (error) {
         console.log('error en el fetch', error.message);
     }
+}
+
+
+
+
+//funcio per visualitzar les dades de l'usuari. Rep un json amb les dades de l'usuari
+function mostrarDadesVenedor(dadesUsuari) {
+    const container = document.getElementById("dades_venedor");
+    container.innerHTML = ""; // netegem el contenidor
+
+    const titol = document.createElement('p');
+    titol.textContent = 'Les teves dades';
+    container.appendChild(titol);
+
+    //recorrem totes les claus menys 'id_usuari'
+    for (const [key, value] of Object.entries(dadesUsuari)) {
+        //saltar aquest camp que no es d'interes per l'usuari
+        if (key === "id_usuari") continue; 
+        if (key === "tipus_usuaris") continue;
+
+        //crear label
+        const label = document.createElement("label");
+        label.textContent = key;
+        label.setAttribute("for", key);
+        label.style.display = "block";
+        label.style.marginTop = "10px";
+
+        //crear input
+        const input = document.createElement("input");
+        input.type = "text";
+        input.id = key;
+        input.name = key;
+        input.value = value;
+        input.style.width = "100%";
+
+        //afegir al contenidor
+        container.appendChild(label);
+        container.appendChild(input);
+    }
+
+    //crear boto 'Editat i actualitzar'
+    const btnActualizar = document.createElement("button");
+    btnActualizar.textContent = "Editat i actualitzar";
+    btnActualizar.className = "btn-verd";
+    btnActualizar.onclick = function () {
+        const dadesActualitzades = {};
+
+        for (const key in dadesUsuari) {
+            if (key === "id_usuari") continue;
+            const input = document.getElementById(key);
+            if (input) {
+                dadesActualitzades[key] = input.value;
+            }
+        }
+
+        /*
+        // Aquí hauries de posar la URL del teu endpoint d'actualització
+        fetch("https://api.exemple.com/usuaris/" + dadesUsuari.id_usuari, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(dadesActualitzades),
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Error al actualitzar");
+            return response.json();
+        })
+        .then(data => {
+            alert("Dades actualitzades correctament!");
+        })
+        .catch(error => {
+            console.error(error);
+            alert("Hi ha hagut un error en actualitzar les dades.");
+        });
+        */
+    };
+
+
+    //crear boto per Tornar al menú d'usuari
+    const btnTornar = document.createElement("button");
+    btnTornar.textContent = "Tornar al menú";
+    btnTornar.className = "btn-verd btn-marge-esquerra";
+    btnTornar.onclick = function () {
+        window.location.href = "venedor_menu_inici.html";
+    };
+
+    //afegim els botons al contenidor
+    container.appendChild(btnActualizar);
+    container.appendChild(btnTornar);
 }
