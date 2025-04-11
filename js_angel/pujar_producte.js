@@ -108,12 +108,20 @@ document.addEventListener("DOMContentLoaded", function () {
             }       
             const price = comprovacioPreu(precio);
             //si el preu es menor a 0 => valor entrat com preu es incorrecte
-            if(preu < 0){
+            if(price < 0){
                 alert("Preu introduït no vàlid!");
                 return;
             }
-            const quantitat_disponible = document.getElementById("quantitat_disponible").value;
+
             const imatge = document.getElementById("url_imatge").value
+            
+            
+            const quantitat_disponible = parseInt(document.getElementById("quantitat_disponible").value.trim());
+            if (isNaN(quantitat_disponible) || quantitat_disponible < 0) {
+                alert("Quantitat disponible no vàlida!");
+                return;
+            }
+
 
             //si hi ha camps buits => missatge d'avis
             if (!nom_producte || !descripcio_producte || !price || !quantitat_disponible || !imatge) {
@@ -123,6 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Capturar els valors del formulari
             const formData = {
+                id_venedor : userId,
                 nom : nom_producte,
                 descripcio : descripcio_producte,
                 preu: price,
@@ -133,12 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("Dades del formulari:", formData);
 
             //aqui fer la peticio fetch
-            
-
-            //si fetch ok
-
-            //finalment conduir l'usuari a una altra pagina o mostrar un missatge
-            //window.location.href = 'venedor_menu_inici.html';
+            crearNouProducte(formData);
         });
     }else{
         console.log('Botón no encontrado');
@@ -196,6 +200,7 @@ async function crearNouProducte(producte_dada){
             alert("Error al registre: " + data.detail);
         } else {
             alert("Producte creat correctament!");
+            const form = document.getElementById('nou_producte_form');
             form.reset();
             window.location.href = "venedor_menu_inici.html";
         }
