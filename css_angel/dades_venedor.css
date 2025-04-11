@@ -103,47 +103,6 @@ body {
     box-sizing: border-box;
 }
   
-  /* Estils pels botons */
-.btn-verd {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 16px;
-    margin-top: 15px;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s;
-}
-  
-.btn-verd:hover {
-    background-color: #45a049;
-}
-/* Estil principal del contenidor */
-#dades_venedor {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 30px;
-    background-color: #f8f8f8;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-  
-  /* Estils pels labels i inputs */
-#dades_venedor label {
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #333;
-}
-  
-#dades_venedor input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    margin-bottom: 15px;
-    box-sizing: border-box;
-}
-  
 /* Estils pels botons */
 .btn-verd {
     background-color: #4CAF50;
@@ -151,9 +110,9 @@ body {
     border: none;
     padding: 10px 16px;
     margin-top: 15px;
-    border-radius: 25px;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 15px;
     transition: background-color 0.3s;
     margin-left: 30px;
 }
@@ -168,4 +127,10 @@ body {
     margin-left: 40px;
 }
 
-  
+#dades_venedor p {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #0a0a0a;
+}
