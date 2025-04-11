@@ -175,3 +175,46 @@ def read_producte(id):
         if conn.is_connected():
             cursor.close()
             conn.close()
+
+
+
+#funcio per actualitzar un usuari a la base de dades
+def update_user(id, usuari):
+    try:
+        conn = connexio_db()
+        if not conn:
+            raise HTTPException(status_code=500, detail="No connection to database")
+
+        cursor = conn.cursor()
+
+        # Consulta d'actualització
+        query = """
+            UPDATE usuaris 
+            SET dni=%s, nom=%s, cognom=%s, email=%s, contrasenya=%s, 
+                telefon=%s, comarca=%s, compte_banc=%s 
+            WHERE id = %s
+        """
+
+        # Valors que venen del frontend (del JSON)
+        valors = (
+            usuari.dni, usuari.nom, usuari.cognom, usuari.email,
+            usuari.contrasenya, usuari.telefon, usuari.comarca,
+            usuari.compte_banc, id
+        )
+
+        cursor.execute(query, valors)
+        conn.commit()
+
+        #comprovem si s'ha actualitzat cap registre
+        if cursor.rowcount == 0:
+            raise HTTPException(status_code=404, detail="Usuari no trobat per actualitzar")
+
+        return {"missatge": "Usuari actualitzat correctament"}
+
+    except mysql.connector.Error as e:
+        raise HTTPException(status_code=500, detail=f"Error en actualitzar usuari: {e}")
+
+    finally:
+        if conn.is_connected():
+            cursor.close()
+            conn.close()
