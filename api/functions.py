@@ -136,3 +136,42 @@ def insert_nou_producte(producte):
         cur.close()
         conn.close()
 
+
+#rep una tupla i retorna un diccionari de producte
+def producte_schema(product) -> dict:
+    return {
+        "id": product[0],
+        "id_veeenedor": product[1],
+        "nom": product[2],
+        "descripcio": product[3],
+        "preu": product[4],
+        "stock": product[5],
+        "url_imatge": product[6],
+        "creat_a": product[7]
+    }
+
+
+# metode READ / GET per obtenir les dades d'un producte
+def read_producte(id):
+    try:
+        conn = connexio_db()
+        if not conn:  
+            raise HTTPException(status_code=500, detail="No connection data base")  
+        # fem la query i l'executem
+        cursor = conn.cursor()  
+        cursor.execute("SELECT * FROM productes WHERE id = %s", (id,))
+        usuari = cursor.fetchone()
+        
+        #si no existeix el producte amb id X executa excepció
+        if usuari is None:
+            raise HTTPException(status_code=404, detail='ID product not found')
+        # retornem el producte
+        return usuari
+
+    except mysql.connector.Error as e:
+        raise HTTPException(status_code=500, detail=f"Error en obtenir el producte: {e}")
+    
+    finally:
+        if conn.is_connected():
+            cursor.close()
+            conn.close()

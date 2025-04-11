@@ -85,3 +85,10 @@ class Producte(BaseModel):
 async def create_producte(producte: Producte):
     result = insert_nou_producte(producte)
     return result
+
+
+#enpoint per retornar un producte amb totes les seves dades a partir del seu ID
+@app.get("/producte/{id}", response_model= dict)
+async def retornar_producte(id: int):
+    producte_data = read_producte(id)
+    return producte_schema(producte_data)
