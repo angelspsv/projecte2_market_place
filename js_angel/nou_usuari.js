@@ -57,9 +57,15 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // Validació del compte bancari (IBAN)
+        //validacio del compte bancari (IBAN)
         if (!/^[a-zA-Z]{2}\d{22}$/.test(iban_entrat)) {
             alert("IBAN no vàlid.");
+            return;
+        }
+
+        //validacio de la longitud de 24 caracters
+        if (iban_entrat.length !== 24) {
+            alert("El IBAN ha de tenir exactament 24 caràcters.");
             return;
         }
 

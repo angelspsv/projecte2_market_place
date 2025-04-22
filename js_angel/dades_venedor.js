@@ -165,13 +165,92 @@ function mostrarDadesVenedor(dadesUsuari) {
         //afegim al nou objecte les dades de ID i tipus_usuaris
         dadesActualitzades.id_usuari = dadesUsuari.id_usuari;  
         dadesActualitzades.tipus_usuaris = dadesUsuari.tipus_usuaris;
+        
 
-        //recollim les dades dels inputs
+        //recollim les dades dels inputs i validem dins del bucle
         for (const key in dadesUsuari) {
             const input = document.getElementById(key);
             if (input) {
-                //actualitzem el valor de les dades
-                dadesActualitzades[key] = input.value; 
+                let valor = input.value.trim();
+
+                //validacio per a cada camp
+                switch (key) {
+                    case "nom":
+                    case "cognom":
+                        //validacio del nom i cognom (no poden estar buits)
+                        if (!valor) {
+                            alert(`${key} no pot estar buit.`);
+                            return;
+                        }
+                        dadesActualitzades[key] = valor.toLowerCase();
+                        break;
+
+                    case "email":
+                        //validacio email
+                        let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailRegex.test(valor)) {
+                            alert("El correu electrònic entrat no és vàlid!");
+                            return;
+                        }
+                        dadesActualitzades[key] = valor.toLowerCase();
+                        break;
+
+                    case "contrasenya":
+                        //validacio de la contrasenya (minim 6 chars)
+                        if (valor.length < 6) {
+                            alert("La contrasenya és massa curta!");
+                            return;
+                        }
+                        dadesActualitzades[key] = valor;
+                        break;
+
+                    case "telefon":
+                        //validacio del telefon (ha de tenir 9 nums)
+                        if (!/^\d{9}$/.test(valor)) {
+                            alert("El telèfon ha de tenir 9 dígits.");
+                            return;
+                        }
+                        dadesActualitzades[key] = valor;
+                        break;
+
+                    case "dni":
+                        //validacio del DNI (8 nums + 1 lletra)
+                        if (!/^\d{8}[a-zA-Z]$/.test(valor)) {
+                            alert("DNI no vàlid.");
+                            return;
+                        }
+                        dadesActualitzades[key] = valor;
+                        break;
+
+                    case "comarca":
+                        //comarca no pot estar buit
+                        if (!valor) {
+                            alert("La comarca no pot estar buida.");
+                            return;
+                        }
+                        dadesActualitzades[key] = valor;
+                        break;
+
+                    case "iban":
+                        //validacio del compte bancari (IBAN)
+                        if (!/^[a-zA-Z]{2}\d{22}$/.test(valor)) {
+                            alert("IBAN no vàlid.");
+                            return;
+                        }
+
+                        //validacio de la longitud de 24 chars
+                        if (valor.length !== 24) {
+                            alert("El IBAN ha de tenir exactament 24 caràcters.");
+                            return;
+                        }
+
+                        dadesActualitzades[key] = valor;
+                        break;
+
+                    default:
+                        //si no es cap dels camps especifics, afegim el valor sense validacio addicional
+                        dadesActualitzades[key] = valor;
+                }
             }
         }
 
