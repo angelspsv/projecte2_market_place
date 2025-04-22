@@ -256,4 +256,26 @@ def read_products():
 
 
 
+# metode READ / GET per retornar tots els productes del mateix venedor
+def read_products_venedor(id):
+    try:
+        conn = connexio_db()
+        if not conn:  
+            raise HTTPException(status_code=500, detail="No connection data base")  
+        
+        cursor = conn.cursor()  
+        cursor.execute("SELECT * FROM productes WHERE id_venedor = %s", (id,))
+        products = cursor.fetchall()
 
+        if products is None:
+            raise HTTPException(status_code=404, detail="Usuari amb ID ${id} no te productes a la taula Productes")
+
+        return products
+
+    except mysql.connector.Error as e:
+        raise HTTPException(status_code=500, detail=f"Error en obtenir els productes: {e}")
+    
+    finally:
+        if conn.is_connected():
+            cursor.close()
+            conn.close()

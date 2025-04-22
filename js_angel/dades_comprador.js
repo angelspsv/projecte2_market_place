@@ -90,15 +90,7 @@ document.addEventListener("DOMContentLoaded", function() {
     //fem el fetch amb el id de l'usuari per obtenir les dades de l'usuari i mostrar-les
     //realitzar la peticio GET per verificar l'existencia de l'usuari
     const user_data = obtenimDadesUsuari(userId);
-
-/*
-    //cridem la funcio per mostrar el formulari amb les dades del usuari
-    if (user_data) {
-        crearFormulari(user_data);
-    }else{
-        console.log("no arriben les dades");
-    }
-*/       
+    
 });
 
 
@@ -302,7 +294,7 @@ function mostrarDadesComprador(dadesUsuari) {
     btnTornar.textContent = "Tornar al menú";
     btnTornar.className = "btn-verd btn-marge-esquerra";
     btnTornar.onclick = function () {
-        window.location.href = "venedor_menu_inici.html";
+        window.location.href = "comprador_menu_inici.html";
     };
 
     //afegim els botons al contenidor
@@ -310,16 +302,3 @@ function mostrarDadesComprador(dadesUsuari) {
     container.appendChild(btnTornar);
 }
 
-
-
-
-//funcio per crear el formulari amb les dades de l'usuari
-function crearFormulari(dades) {
-    const container = document.getElementById("dades_comprador");
-
-    //netegem el contenidor
-    container.innerHTML = '';
-
-    //crear formulari i mostrar les dades del usuari
-    
-}

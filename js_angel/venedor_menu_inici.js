@@ -1,11 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const buttonsContainer = document.getElementById("buttons-container");
     
-    //salutacio usuari
-    //let nom = 'Joan'; //haura d'agafar el nom real de l'usuari
-    //const nom_usuari = document.querySelector('.username');
-    //nom_usuari.textContent = nom.toUpperCase();
-
+    
     //fem un array amb el text dels botons i les urls
     const buttons = [
         { text: "Les meves dades", link: "dades_venedor.html" },
@@ -55,6 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //salutacio al usuari
     let nom = userName;  //hauria de mostrar el nom del usuari real
     const nom_usuari = document.querySelector('.username');
+    const id_usuari = userId;
 
     //si nom i nom_usuari no son buits, mostrem l'opcio del IF
     if (nom_usuari && nom) {
@@ -65,12 +62,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+    //funcio asincrona que carrega els productes del venedor cridant el endpoint /productes_venedor/{id}
+    mostrarProductesVenedor(id_usuari);
 
-
-
-
-    //funcio que carrega els productes del venedor
-    mostrarProductesVenedor(3);
 });
 
 
@@ -78,12 +72,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //funcio encara per desenvolupar
 //coneixent qui es el venedor es cridara el endpoint per retornar tots els seus productes
-function mostrarProductesVenedor(id_venedor){
-    const tmp = document.getElementById('productes_venedor');
-    tmp.textContent = `Aqui mostrem els articles del venedor amb id: ${id_venedor}`;
+async function mostrarProductesVenedor(id_venedor){
+    try{
 
-    //obtenir la llista de productes de l'usuari i mostrar a tots
-    //amb un forEach crear contenidors per cada producte i mostrar a dos per linia
+        const tmp = document.getElementById('productes_venedor');
+        tmp.textContent = `Aqui mostrem els articles del venedor amb id: ${id_venedor}`;
+
+        //obtenir la llista de productes de l'usuari
+        //fetch per obtenir els productes del venedor 
+        const response = await fetch(`http://127.0.0.1:8000/productes_venedor/${id_venedor}`);
+
+        if (!response.ok) {
+            throw new Error('Usuari no trobat');
+        }
+
+        //obtenim la llista d'objectes de productes
+        const dataProductes = await response.json();
+        console.log(dataProductes);
+
+
+        //cridar funcio per mostrar cada producte
+        //fare servir createElements per visualitzar cada producte
+        //dos productes per linia
+
+
+
+    }catch (error){
+        console.log('error en el fetch', error.message);
+    }
 
 
 }

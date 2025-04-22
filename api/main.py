@@ -108,3 +108,11 @@ async def actualitzar_usuari(id: int, usuari: Usuari):
 async def obtenir_productes():
     productes = read_products()
     return products_schema(productes)
+
+
+
+#endpoint per veure tots els productes del mateix venedor
+@app.get("/productes_venedor/{id}", response_model=List[dict])
+async def obtenir_productes_venedor(id: int):
+    productes = read_products_venedor(id)
+    return products_schema(productes)
