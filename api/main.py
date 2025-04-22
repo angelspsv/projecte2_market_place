@@ -100,3 +100,11 @@ async def retornar_producte(id: int):
 async def actualitzar_usuari(id: int, usuari: Usuari):
     resultat = update_user(id, usuari)
     return resultat
+
+
+
+#endpoint per veure tots els productes
+@app.get("/productes", response_model=List[dict])
+async def obtenir_productes():
+    productes = read_products()
+    return products_schema(productes)

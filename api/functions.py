@@ -35,6 +35,9 @@ def read_usuaris():
         cursor.execute("SELECT * FROM usuaris")
         usuaris = cursor.fetchall()
 
+        if usuaris is None:
+            raise HTTPException(status_code=404, detail="No hi ha usuaris a la taula Usuaris")
+
         return usuaris
 
     except mysql.connector.Error as e:
@@ -141,7 +144,7 @@ def insert_nou_producte(producte):
 def producte_schema(product) -> dict:
     return {
         "id": product[0],
-        "id_veeenedor": product[1],
+        "id_venedor": product[1],
         "nom": product[2],
         "descripcio": product[3],
         "preu": product[4],
@@ -160,13 +163,13 @@ def read_producte(id):
         # fem la query i l'executem
         cursor = conn.cursor()  
         cursor.execute("SELECT * FROM productes WHERE id = %s", (id,))
-        usuari = cursor.fetchone()
+        producte = cursor.fetchone()
         
         #si no existeix el producte amb id X executa excepció
-        if usuari is None:
+        if producte is None:
             raise HTTPException(status_code=404, detail='ID product not found')
         # retornem el producte
-        return usuari
+        return producte
 
     except mysql.connector.Error as e:
         raise HTTPException(status_code=500, detail=f"Error en obtenir el producte: {e}")
@@ -218,3 +221,39 @@ def update_user(id, usuari):
         if conn.is_connected():
             cursor.close()
             conn.close()
+
+
+# rep una tupla de productes i retorna una llista de diccionaris
+def products_schema(products) -> dict:
+    return [producte_schema(product) for product in products]
+
+
+
+# metode READ / GET per retornar tots els productes
+def read_products():
+    try:
+        conn = connexio_db()
+        if not conn:  
+            raise HTTPException(status_code=500, detail="No connection data base")  
+        
+        cursor = conn.cursor()  
+        cursor.execute("SELECT * FROM productes")
+        products = cursor.fetchall()
+
+        if products is None:
+            raise HTTPException(status_code=404, detail="No hi ha productes a la taula Productes")
+
+        return products
+
+    except mysql.connector.Error as e:
+        raise HTTPException(status_code=500, detail=f"Error en obtenir els productes: {e}")
+    
+    finally:
+        if conn.is_connected():
+            cursor.close()
+            conn.close()
+
+
+
+
+
