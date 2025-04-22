@@ -157,39 +157,56 @@ function mostrarDadesVenedor(dadesUsuari) {
     const btnActualizar = document.createElement("button");
     btnActualizar.textContent = "Editat i actualitzar";
     btnActualizar.className = "btn-verd";
-    btnActualizar.onclick = function () {
+    
+    //funció per actualitzar les dades de l'usuari
+    btnActualizar.onclick = async function() {
         const dadesActualitzades = {};
 
+        //afegim al nou objecte les dades de ID i tipus_usuaris
+        dadesActualitzades.id_usuari = dadesUsuari.id_usuari;  
+        dadesActualitzades.tipus_usuaris = dadesUsuari.tipus_usuaris;
+
+        //recollim les dades dels inputs
         for (const key in dadesUsuari) {
-            if (key === "id_usuari") continue;
             const input = document.getElementById(key);
             if (input) {
-                dadesActualitzades[key] = input.value;
+                //actualitzem el valor de les dades
+                dadesActualitzades[key] = input.value; 
             }
         }
 
-        /*
-        // Aquí hauries de posar la URL del teu endpoint d'actualització
-        fetch("https://api.exemple.com/usuaris/" + dadesUsuari.id_usuari, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(dadesActualitzades),
-        })
-        .then(response => {
-            if (!response.ok) throw new Error("Error al actualitzar");
-            return response.json();
-        })
-        .then(data => {
+        try {
+            //mostrem per la consola l'objecte amb les noves dades
+            console.log(dadesActualitzades);
+            //realitzem peticio PUT per actualitzar les dades de l'usuari
+        
+            const response = await fetch(`http://127.0.0.1:8000/usuari_put/${dadesUsuari.id_usuari}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(dadesActualitzades), //enviem les dades actualitzades com a JSON
+            });
+
+            //comprovem si la resposta ha estat correcta
+            if (!response.ok) {
+                throw new Error("Error en actualitzar les dades");
+            }
+
+            //si tot va be, mostrem un alert i actualitzem la vista amb les noves dades
+            const data = await response.json();
             alert("Dades actualitzades correctament!");
-        })
-        .catch(error => {
-            console.error(error);
+            //mostrem la resposta de l'API
+            console.log("Resposta de la API:", data); 
+
+            //actualitzar la vista amb les noves dades de l'usuari
+            //mostrarDadesVenedor(data); 
+        } catch (error) {
+            console.error("Error al actualitzar les dades:", error.message);
             alert("Hi ha hagut un error en actualitzar les dades.");
-        });
-        */
+        }
     };
+
 
 
     //crear boto per Tornar al menú d'usuari

@@ -96,7 +96,7 @@ async def retornar_producte(id: int):
 
 
 #endpoint PUT per actualitzar un usuari existent
-@app.put("/usuari/{id}", response_model=dict)
+@app.put("/usuari_put/{id}", response_model=dict)
 async def actualitzar_usuari(id: int, usuari: Usuari):
     resultat = update_user(id, usuari)
     return resultat
