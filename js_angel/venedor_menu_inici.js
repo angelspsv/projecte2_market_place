@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     //funcio asincrona que carrega els productes del venedor cridant el endpoint /productes_venedor/{id}
-    mostrarProductesVenedor(id_usuari);
+    obtenirProductesVenedor(id_usuari);
 
 });
 
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //funcio encara per desenvolupar
 //coneixent qui es el venedor es cridara el endpoint per retornar tots els seus productes
-async function mostrarProductesVenedor(id_venedor){
+async function obtenirProductesVenedor(id_venedor){
     try{
 
         const tmp = document.getElementById('productes_venedor');
@@ -94,7 +94,7 @@ async function mostrarProductesVenedor(id_venedor){
         //cridar funcio per mostrar cada producte
         //fare servir createElements per visualitzar cada producte
         //dos productes per linia
-
+        mostrarProductesVenedor(dataProductes);
 
 
     }catch (error){
@@ -102,4 +102,104 @@ async function mostrarProductesVenedor(id_venedor){
     }
 
 
+}
+
+
+//funcio per mostrar cada producte
+//fare servir createElements per visualitzar cada producte
+//dos productes per linia
+function mostrarProductesVenedor(productes){
+    //seleccionem l'element html on es mostraran els productes del venedor
+    const container = document.getElementById('productes_venedor');
+    //netegem el contingunt previ
+    container.innerHTML = "";
+
+    //bucles per recorre els objectes de productes
+    for (let i = 0; i < productes.length; i += 2) {
+        const fila = document.createElement("div");
+        fila.className = "fila-productes";
+    
+        for (let j = i; j < i + 2 && j < productes.length; j++) {
+            const prod = productes[j];
+    
+            //faig el contenidor per cada producte
+            const card = document.createElement("div");
+            card.className = "producte-card";
+    
+            //imatge del producte
+            const img = document.createElement("img");
+            img.src = prod.url_imatge;
+            img.alt = prod.nom;
+            img.className = "producte-img";
+    
+            //dades del producte
+            const info = document.createElement("div");
+            info.className = "producte-info";
+            info.innerHTML = `
+                <strong>${prod.nom}</strong><br>
+                ${prod.descripcio}<br>
+                Preu: ${prod.preu} €<br>
+                Stock: ${prod.stock}
+            `;
+    
+            //botons
+            //boto per editar les dades del producte
+            const btnEditar = document.createElement("button");
+            btnEditar.textContent = "Editar";
+            btnEditar.className = "btn-producte editar";
+    
+            //boto per esborrar les dades del producte
+            const btnEliminar = document.createElement("button");
+            btnEliminar.textContent = "Eliminar";
+            btnEliminar.className = "btn-producte eliminar";
+            //afegim esdeveniment al boto per esborrar un article
+            btnEliminar.addEventListener('click', function(){
+                esborrarProducte(prod.id);
+            });
+    
+            const botoContainer = document.createElement("div");
+            botoContainer.className = "producte-botons";
+            botoContainer.appendChild(btnEditar);
+            botoContainer.appendChild(btnEliminar);
+    
+            //afegim diferents elements al card/contenidor de producte
+            card.appendChild(img);
+            card.appendChild(info);
+            card.appendChild(botoContainer);
+            
+            //afegim el producte a la filera
+            fila.appendChild(card);
+        }
+        //afegim filera al contenidor
+        container.appendChild(fila);
+    }
+    
+}
+
+
+
+//funcio async que cridara l'endpoint /producte_del/{id} per esborrar un producte
+async function esborrarProducte(id_producte){
+    if(!id_producte){
+        console.log('Error: ID buit o no definit');
+        return;
+    }
+
+    //abans d'esborrar demanem confirmacio a l'usuari
+    if(confirm('Estàs segur que vols esborrar aquest producte?')){
+        const response = await fetch(`http://127.0.0.1:8000/producte_del/${id_producte}`, {
+            method: 'DELETE', 
+        });
+
+        if (!response.ok) {
+            throw new Error('Producte no trobat');
+        }
+
+        //obtenim la llista d'objectes de productes
+        const data = await response.json();
+        console.log(data);
+
+        //actualitzem la llista de productes
+        //mostrarProductesVenedor(dataProductes);
+    }
 }

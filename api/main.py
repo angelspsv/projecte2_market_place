@@ -116,3 +116,15 @@ async def obtenir_productes():
 async def obtenir_productes_venedor(id: int):
     productes = read_products_venedor(id)
     return products_schema(productes)
+
+
+
+
+#endpoint per esborrar un producte pel seu ID
+@app.delete("/producte_del/{id}", response_model= dict)
+async def esborrar_producte(id: int):
+    producte_esborrat = delete_producte(id)
+    return producte_esborrat
+
+
+
