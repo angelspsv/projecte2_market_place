@@ -35,7 +35,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-
     //recuperar cookie
     const userEmail = getCookie('user_email');
     const userName = getCookie('user_name');
