@@ -100,8 +100,6 @@ async function obtenirProductesVenedor(id_venedor){
     }catch (error){
         console.log('error en el fetch', error.message);
     }
-
-
 }
 
 
@@ -154,7 +152,7 @@ function mostrarProductesVenedor(productes){
             btnEliminar.className = "btn-producte eliminar";
             //afegim esdeveniment al boto per esborrar un article
             btnEliminar.addEventListener('click', function(){
-                esborrarProducte(prod.id);
+                esborrarProducte(prod.id, prod.id_venedor);
             });
     
             const botoContainer = document.createElement("div");
@@ -179,7 +177,8 @@ function mostrarProductesVenedor(productes){
 
 
 //funcio async que cridara l'endpoint /producte_del/{id} per esborrar un producte
-async function esborrarProducte(id_producte){
+//pasem id_producte per esborrar-ho i el id_venedor per actualitzar despres la llista de productes
+async function esborrarProducte(id_producte, id_venedor){
     if(!id_producte){
         console.log('Error: ID buit o no definit');
         return;
@@ -200,6 +199,6 @@ async function esborrarProducte(id_producte){
         console.log(data);
 
         //actualitzem la llista de productes
-        //mostrarProductesVenedor(dataProductes);
+        obtenirProductesVenedor(id_venedor);
     }
 }
