@@ -312,3 +312,30 @@ def delete_producte(id):
         if conn.is_connected():
             cursor.close()
             conn.close()
+
+
+
+
+#funcio per retornar tots el productes segons la comarca del venedor
+def read_products_comarca(comarca):
+    try:
+        conn = connexio_db()
+        if not conn:  
+            raise HTTPException(status_code=500, detail="No connection data base")  
+        
+        cursor = conn.cursor()
+        cursor.execute("SELECT p.* FROM productes p JOIN usuaris u ON p.id_venedor = u.id WHERE u.comarca = %s", (comarca,))
+        products = cursor.fetchall()
+        
+        if products is None:
+            raise HTTPException(status_code=404, detail="No hi ha productes en aquesta comarca ${comarca} ")
+
+        return products
+
+    except mysql.connector.Error as e:
+        raise HTTPException(status_code=500, detail=f"Error en obtenir els productes: {e}")
+    
+    finally:
+        if conn.is_connected():
+            cursor.close()
+            conn.close()

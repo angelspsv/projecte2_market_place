@@ -128,3 +128,14 @@ async def esborrar_producte(id: int):
 
 
 
+
+#endpoint per veure tots els productes dee la mateixa comarca 
+@app.get("/productes/{comarca}", response_model=List[dict])
+async def obtenir_productes_comarca(comarca: str):
+    productes = read_products_comarca(comarca)
+    return products_schema(productes)
+
+
+#@app.get("/items/{param1}/{param2}")
+#async def read_item(param1: str, param2: int):
+#    return {"param1": param1, "param2": param2}
