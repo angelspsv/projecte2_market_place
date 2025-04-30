@@ -105,21 +105,36 @@ body {
     font-size: 14px;
     text-align: center;
 }
-  
-.producte-botons {
+
+.producte-afegir-treure {
+    margin-top: 10px;
     display: flex;
-    justify-content: space-around;
-    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
-  
-.btn-producte {
-    background-color: #ccc;
+
+.btn-quantitat {
+    padding: 5px 10px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
     border: none;
     border-radius: 5px;
-    padding: 5px 10px;
     cursor: pointer;
+    width: 30px;
+    height: 30px;
+    line-height: 1;
+    text-align: center;
 }
-  
-.btn-producte:hover {
-    background-color: #aaa;
+
+.btn-quantitat:hover {
+    background-color: #0056b3;
+}
+
+.quantitat-numero {
+    font-size: 16px;
+    width: 30px;
+    text-align: center;
+    display: inline-block;
 }

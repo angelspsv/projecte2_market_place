@@ -187,35 +187,71 @@ function mostrarProductesVenedor(productes){
                 Preu: ${prod.preu}€<br>
                 Quantitat: ${prod.stock}kg/uds
             `;
+
+            //contador de productes/quantitat que vol compra l'usuari
+            const afegirTreureContainer = document.createElement("div");
+            afegirTreureContainer.className = "producte-afegir-treure";
+
+            //boto +
+            const btnAfegir = document.createElement("button");
+            btnAfegir.textContent = "+";
+            btnAfegir.className = "btn-quantitat";
+            btnAfegir.addEventListener("click", () => {
+                let actual = parseInt(spanQuantitat.textContent);
+                spanQuantitat.textContent = actual + 1;
+            });
+
+            //span per mostrar la quantitat
+            const spanQuantitat = document.createElement("span");
+            spanQuantitat.textContent = "0";
+            spanQuantitat.className = "quantitat-numero";
+        
+            //boto -
+            const btnRestar = document.createElement("button");
+            btnRestar.textContent = "-";
+            btnRestar.className = "btn-quantitat";
+            btnRestar.addEventListener("click", () => {
+                let actual = parseInt(spanQuantitat.textContent);
+                if (actual > 0) {
+                    spanQuantitat.textContent = actual - 1;
+                }
+            });
+
+            // Afegim els elements al contenidor
+            afegirTreureContainer.appendChild(btnAfegir);
+            afegirTreureContainer.appendChild(spanQuantitat);
+            afegirTreureContainer.appendChild(btnRestar);
+
     
             //botons
             //boto per afegir el producte al carreto
-            const btnEditar = document.createElement("button");
-            btnEditar.textContent = "Afegir";
-            btnEditar.className = "btn-producte editar";
+            //const btnEditar = document.createElement("button");
+            //btnEditar.textContent = "Afegir";
+            //btnEditar.className = "btn-producte editar";
             //afegim esdeveniment al boto per afegir un article
-            btnEditar.addEventListener('click', function(){
-                alert('Cridar funció per afegir al carretó!');
-            });
+            //btnEditar.addEventListener('click', function(){
+            //    alert('Cridar funció per afegir al carretó!');
+            //});
     
             //boto per esborrar o treure el producte del carreto
-            const btnEliminar = document.createElement("button");
-            btnEliminar.textContent = "Treure";
-            btnEliminar.className = "btn-producte eliminar";
+            //const btnEliminar = document.createElement("button");
+            //btnEliminar.textContent = "Treure";
+            //btnEliminar.className = "btn-producte eliminar";
             //afegim esdeveniment al boto per esborrar un article
-            btnEliminar.addEventListener('click', function(){
-                alert('Cridar funció per esborrar!');
-            });
+            //btnEliminar.addEventListener('click', function(){
+            //    alert('Cridar funció per esborrar!');
+            //});
     
-            const botoContainer = document.createElement("div");
-            botoContainer.className = "producte-botons";
-            botoContainer.appendChild(btnEditar);
-            botoContainer.appendChild(btnEliminar);
+            //const botoContainer = document.createElement("div");
+            //botoContainer.className = "producte-botons";
+            //botoContainer.appendChild(btnEditar);
+            //botoContainer.appendChild(btnEliminar);
     
             //afegim diferents elements al card/contenidor de producte
             card.appendChild(img);
             card.appendChild(info);
-            card.appendChild(botoContainer);
+            //card.appendChild(botoContainer);
+            card.appendChild(afegirTreureContainer);
             
             //afegim el producte a la filera
             fila.appendChild(card);
