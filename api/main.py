@@ -136,6 +136,12 @@ async def obtenir_productes_comarca(comarca: str):
     return products_schema(productes)
 
 
-#@app.get("/items/{param1}/{param2}")
-#async def read_item(param1: str, param2: int):
-#    return {"param1": param1, "param2": param2}
+
+
+#endpoint PUT per actualitzar un producte existent
+@app.put("/producte_put/{id}", response_model=dict)
+async def actualitzar_producte(id: int, producte: Producte):
+    resultat = update_producte(id, producte)
+    return resultat
+
+

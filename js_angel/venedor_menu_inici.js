@@ -144,6 +144,12 @@ function mostrarProductesVenedor(productes){
             const btnEditar = document.createElement("button");
             btnEditar.textContent = "Editar";
             btnEditar.className = "btn-producte editar";
+            //afegim esdeveniment al boto editar:
+            //redirigeix el usuari-venedor cap a editar_producte.html amb el ID del producte
+            btnEditar.addEventListener('click', function(){
+                //passem id producte per l'url
+                window.location.href = `editar_producte.html?id=${prod.id}`;
+            });
     
             //boto per esborrar les dades del producte
             const btnEliminar = document.createElement("button");

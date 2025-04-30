@@ -339,3 +339,46 @@ def read_products_comarca(comarca):
         if conn.is_connected():
             cursor.close()
             conn.close()
+
+
+
+#funcio per actualitzar un producte a la base de dades
+def update_producte(id, producte):
+    try:
+        conn = connexio_db()
+        if not conn:
+            raise HTTPException(status_code=500, detail="No connection to database")
+
+        cursor = conn.cursor()
+
+        #consulta d'actualitzacio
+        query = """
+            UPDATE productes 
+            SET nom=%s, descripcio=%s, preu=%s, stock=%s, url_imatge=%s 
+            WHERE id = %s
+        """
+
+        # Valors que venen del frontend (del JSON)
+        valors = (
+            producte.nom, producte.descripcio, producte.preu,
+            producte.stock, producte.url_imatge, id
+        )
+
+        cursor.execute(query, valors)
+        conn.commit()
+
+        #comprovem si s'ha actualitzat cap registre
+        if cursor.rowcount == 0:
+            raise HTTPException(status_code=404, detail="producte no trobat per actualitzar")
+
+        return {"missatge": "Producte actualitzat correctament"}
+
+    except mysql.connector.Error as e:
+        raise HTTPException(status_code=500, detail=f"Error en actualitzar producte: {e}")
+
+    finally:
+        if conn.is_connected():
+            cursor.close()
+            conn.close()
+
+
