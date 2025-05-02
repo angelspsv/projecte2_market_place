@@ -111,6 +111,16 @@ function mostrarProductesVenedor(productes){
     //netegem el contingunt previ
     container.innerHTML = "";
 
+
+    //si no hi ha productes, mostrem un missatge
+    if (productes.length === 0) {
+        const missatge = document.createElement("div");
+        missatge.className = "missatge-buit";
+        missatge.textContent = "No tens cap producte pujat!";
+        container.appendChild(missatge);
+        return;
+    }
+
     //bucles per recorre els objectes de productes
     for (let i = 0; i < productes.length; i += 2) {
         const fila = document.createElement("div");

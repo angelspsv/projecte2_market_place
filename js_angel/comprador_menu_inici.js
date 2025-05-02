@@ -154,11 +154,20 @@ async function llistaProductesComarca(comarca){
 //funcio per mostrar cada producte
 //fare servir createElements per visualitzar cada producte
 //dos productes per linia
-function mostrarProductesVenedor(productes){
+function mostrarProductesVenedorsSenseComptador(productes){
     //seleccionem l'element html on es mostraran els productes del venedor
     const container = document.getElementById('visualitzacio_productes_cercats');
     //netegem el contingunt previ
     container.innerHTML = "";
+
+    //si no hi ha productes, mostrar un missatge
+    if (productes.length === 0) {
+        const missatge = document.createElement("div");
+        missatge.className = "missatge-buit";
+        missatge.textContent = "No hi ha productes per aquesta cerca!";
+        container.appendChild(missatge);
+        return;
+    }
 
     //bucles per recorre els objectes de productes
     for (let i = 0; i < productes.length; i += 2) {
@@ -171,6 +180,151 @@ function mostrarProductesVenedor(productes){
             //faig el contenidor per cada producte
             const card = document.createElement("div");
             card.className = "producte-card";
+            card.addEventListener('click', function(){
+                obtenirCargarTotsProductesMateixVenedor(prod.id_venedor);
+            });
+    
+            //imatge del producte
+            const img = document.createElement("img");
+            img.src = prod.url_imatge;
+            img.alt = prod.nom;
+            img.className = "producte-img";
+    
+            //dades del producte
+            const info = document.createElement("div");
+            info.className = "producte-info";
+            info.innerHTML = `
+                <strong>${prod.nom}</strong><br>
+                ${prod.descripcio}<br>
+                Preu: ${prod.preu}€<br>
+                Quantitat: ${prod.stock}kg/uds
+            `;
+    
+            //afegim diferents elements al card/contenidor de producte
+            card.appendChild(img);
+            card.appendChild(info);
+            
+            //afegim el producte a la filera
+            fila.appendChild(card);
+        }
+        //afegim filera al contenidor
+        container.appendChild(fila);
+    }
+}
+
+
+//aquesta funcio rep l'ID del usuari venedor i retorna tots els seus articles
+//s'ha de cridar el endpoint productes_id_venedor => cridar funcio per 
+// mostrar tots els articles amb contador de quantitat
+async function obtenirCargarTotsProductesMateixVenedor(id_venedor){
+    //depuracio
+    //alert(`Mostrar els articles del venedor amb ID: ${id_venedor}`);
+    console.log(`Comprador ha fet click sobre article venedor amb ID: ${id_venedor}.`);
+
+    //obtenim productes del venedor amb ID_entrat
+    const productes = await productesMateixVenedor(id_venedor);
+
+    //obtenim les dades del venedor amb ID_entrat
+    const dadesVenedor = await obtenirDadesVenedor(id_venedor);
+
+    //cridar funcio per visualitzar tots els productes d'aquest venedor
+    mostrarProductesVenedorAmbComptador(productes, dadesVenedor);
+}
+
+
+//funcio per obtenir els productes del mateix venedor
+async function productesMateixVenedor(id_venedor){
+    try {
+        const response = await fetch(`http://127.0.0.1:8000/productes_venedor/${id_venedor}`);
+    
+        if (!response.ok) {
+            throw new Error('Usuari no trobat');
+        }
+    
+        //obtenim les dades de l'usuari
+        const userProds = await response.json();
+        console.log("Productes del mateix venedor:", userProds); //depuracio
+        return userProds;
+    
+    } catch (error) {
+        console.log('error en el fetch', error.message);
+    }   
+}
+
+
+
+//funcio que filtra els articles pel seu nom 
+// i només retorna els que tenen el nom igual que el text cercat
+function buscarNomEntreProductes(objectes, text_entrat){
+    let text_cerca = text_entrat.trim().toLowerCase();
+
+    //nomes es fara cerca a partir de dos caracters entrats
+    if(text_cerca.length > 1){
+        //filtrem els productes de la comarca en la cerca del text entrat
+        let productes_filtrats = objectes.filter(function(obj){
+            return obj.nom.toLowerCase().includes(text_cerca);
+        });
+
+        //cridem la funcio per visualització dels productes que compleixin amb el text cercat
+        mostrarProductesVenedorsSenseComptador(productes_filtrats);
+
+    }else{
+        //si el text es menor de 2chars
+        alert("El text entrat és massa curt!");
+    }
+}
+
+
+
+//funcio per obtenir els productes del mateix venedor
+async function obtenirDadesVenedor(id){
+    try {
+        const response = await fetch(`http://127.0.0.1:8000/usuari/${id}`);
+
+        if (!response.ok) {
+            throw new Error('Usuari no trobat');
+        }
+    
+        //obtenim les dades de l'usuari
+        const userData = await response.json();
+        console.log("Dades del usuari:", userData); //depuracio
+        return userData;
+    
+    } catch (error) {
+        console.log('error en el fetch', error.message);
+    }   
+}
+
+
+
+
+//funcio per mostrar cada producte
+//fare servir createElements per visualitzar cada producte
+//dos productes per linia
+function mostrarProductesVenedorAmbComptador(productes, usuari){
+    //seleccionem l'element html on es mostraran els productes del venedor
+    const container = document.getElementById('visualitzacio_productes_cercats');
+    //netegem el contingunt previ
+    container.innerHTML = "";
+
+    //crear un titol amb el ID/nom del venedor per aixi saber el comprador a qui compra
+    const titol = document.createElement("p");
+    titol.textContent = `Usuari venedor: ${usuari.nom}!`;
+    titol.className = 'titol-usuari';
+    container.appendChild(titol);
+
+    //bucles per recorre els objectes de productes
+    for (let i = 0; i < productes.length; i += 2) {
+        const fila = document.createElement("div");
+        fila.className = "fila-productes";
+    
+        for (let j = i; j < i + 2 && j < productes.length; j++) {
+            const prod = productes[j];
+    
+            //faig el contenidor per cada producte
+            const card = document.createElement("div");
+            card.className = "producte-card";
+            
     
             //imatge del producte
             const img = document.createElement("img");
@@ -188,6 +342,7 @@ function mostrarProductesVenedor(productes){
                 Quantitat: ${prod.stock}kg/uds
             `;
 
+            
             //contador de productes/quantitat que vol compra l'usuari
             const afegirTreureContainer = document.createElement("div");
             afegirTreureContainer.className = "producte-afegir-treure";
@@ -221,36 +376,11 @@ function mostrarProductesVenedor(productes){
             afegirTreureContainer.appendChild(btnAfegir);
             afegirTreureContainer.appendChild(spanQuantitat);
             afegirTreureContainer.appendChild(btnRestar);
-
-    
-            //botons
-            //boto per afegir el producte al carreto
-            //const btnEditar = document.createElement("button");
-            //btnEditar.textContent = "Afegir";
-            //btnEditar.className = "btn-producte editar";
-            //afegim esdeveniment al boto per afegir un article
-            //btnEditar.addEventListener('click', function(){
-            //    alert('Cridar funció per afegir al carretó!');
-            //});
-    
-            //boto per esborrar o treure el producte del carreto
-            //const btnEliminar = document.createElement("button");
-            //btnEliminar.textContent = "Treure";
-            //btnEliminar.className = "btn-producte eliminar";
-            //afegim esdeveniment al boto per esborrar un article
-            //btnEliminar.addEventListener('click', function(){
-            //    alert('Cridar funció per esborrar!');
-            //});
-    
-            //const botoContainer = document.createElement("div");
-            //botoContainer.className = "producte-botons";
-            //botoContainer.appendChild(btnEditar);
-            //botoContainer.appendChild(btnEliminar);
+            
     
             //afegim diferents elements al card/contenidor de producte
             card.appendChild(img);
             card.appendChild(info);
-            //card.appendChild(botoContainer);
             card.appendChild(afegirTreureContainer);
             
             //afegim el producte a la filera
@@ -258,29 +388,5 @@ function mostrarProductesVenedor(productes){
         }
         //afegim filera al contenidor
         container.appendChild(fila);
-    }
-}
-
-
-
-//funcio que filtra els articles pel seu nom 
-// i només retorna els que tenen el nom igual que el text cercat
-function buscarNomEntreProductes(objectes, text_entrat){
-    let text_cerca = text_entrat.trim().toLowerCase();
-
-    //nomes es fara cerca a partir de dos caracters entrats
-    if(text_cerca.length > 1){
-        //filtrem els productes de la comarca en la cerca del text entrat
-        let productes_filtrats = objectes.filter(function(obj){
-            return obj.nom.toLowerCase().includes(text_cerca);
-        });
-
-        //cridem la funcio per visualització dels productes que compleixin amb el text cercat
-        mostrarProductesVenedor(productes_filtrats);
-
-
-    }else{
-        //si el text es menor de 2chars
-        alert("El text entrat és massa curt!");
     }
 }
