@@ -1,10 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
     const buttonsContainer = document.getElementById("buttons-container");
 
-    //salutacio usuari
-    let nom = 'Angel'; //haura d'agafar el nom real de l'usuari
-    const nom_usuari = document.querySelector('.username');
-    nom_usuari.textContent = nom.toUpperCase();
+
+    
+    //faig el logo-home que si rep click portara el usuari a la pagina index / inici
+    const logo = document.createElement('img');
+    logo.src = 'imatges_angel/sprout_346246.png';
+    logo.alt = 'GO to home';
+    logo.addEventListener('click', function(){
+    window.location.href = 'venedor_menu_inici.html';
+    });
+    document.getElementById('logo_home').appendChild(logo);
+
+
 
     //fem un array amb el text dels botons i les urls
     const buttons = [
@@ -34,69 +42,115 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    const accioButton = document.querySelector('.submit-btn');
-        if (accioButton) {
-            console.log('Botón encontrado');
-            accioButton.addEventListener('click', function(event){
-                //evitem que la pagina es regarregues
-                event.preventDefault(); 
-                console.log('Botón clicado');
-
-                //agafem les dades des dels camps del formulari 
-                const nom_producte = document.getElementById("nom_producte").value.trim().toLowerCase();
-                const descripcio_producte = document.getElementById("descripcio_producte").value.trim().toLowerCase();
-                //agafem el valor del preu
-                let precio = document.getElementById("preu").value.trim();
-                if(!precio){
-                    alert("Preu no introduït!");
-                    return;
-                }       
-                const preu = comprovacioPreu(precio);
-                //si el preu es menor a 0 => valor entrat com preu es incorrecte
-                if(preu < 0){
-                    alert("Preu introduït no vàlid!");
-                    return;
-                }
-                const quantitat_disponible = document.getElementById("quantitat_disponible").value;
-                const url_imatge = document.getElementById("url_imatge").value
 
 
-                //si hi ha camps buits => missatge d'avis
-                if (!nom_producte || !descripcio_producte || !preu || !quantitat_disponible || !url_imatge) {
-                    alert("No pot haver camps buits!");
-                    return;
-                }
-
-
-                // Capturar els valors del formulari
-                const formData = {
-                    nom_producte: document.getElementById("nom_producte").value,
-                    descripcio_producte: document.getElementById("descripcio_producte").value,
-                    preu: document.getElementById("preu").value,
-                    quantitat_disponible: document.getElementById("quantitat_disponible").value,
-                    url_imatge: document.getElementById("url_imatge").value
-                };
-
-                console.log("Dades del formulari:", formData);
-
-                // Aquí podrías hacer una petición fetch si fuera necesario
-
-
-                //i finalment conduir l'usuari a una altra pagina o mostrar un missatge
-
-            });
-        } else {
-            console.log('Botón no encontrado');
+    //codi per recuperar la cookie
+    function getCookie(name) {
+        let value = "; " + document.cookie;
+        let parts = value.split("; " + name + "=");
+        if (parts.length === 2) {   
+            let cookieValue = parts.pop().split(";").shift();
+            console.log(`Cookie ${name} trobada:`, cookieValue);  //verifiquem que la coookie hi es
+            return cookieValue;
         }
+        console.log(`Cookie ${name} no encontrada`);
+        return null;
+    }
+
+
+
+    //recuperar cookie
+    const userEmail = getCookie('user_email');
+    const userName = getCookie('user_name');
+    const userType = getCookie('user_type');
+    const userId = getCookie('user_id');
+
+    console.log('Email:', userEmail);
+    console.log('Nombre:', userName);
+    console.log('Tipo de usuario:', userType);
+    console.log('ID usuari:', userId);
     
+
+    //salutacio al usuari
+    let nom = userName;  //hauria de mostrar el nom del usuari real
+    const nom_usuari = document.querySelector('.username');
+
+    //si nom i nom_usuari no son buits, mostrem l'opcio del IF
+    if (nom_usuari && nom) {
+        nom_usuari.textContent = `Hola, ${nom.toUpperCase()}`;
+    } else {
+        console.error('Problema con el nombre del usuario');
+        nom_usuari.textContent = 'Hola!';
+    }
+
+
+
+
+
+
+
+    const accioButton = document.querySelector('.submit-btn');
+    if (accioButton){
+        console.log('Botón encontrado');
+        accioButton.addEventListener('click', function(event){
+            //evitem que la pagina es regarregues
+            event.preventDefault(); 
+            console.log('Botón clicado');
+
+            //agafem les dades des dels camps del formulari 
+            const nom_producte = document.getElementById("nom_producte").value.trim().toLowerCase();
+            const descripcio_producte = document.getElementById("descripcio_producte").value.trim().toLowerCase();
+            //agafem el valor del preu
+            let precio = document.getElementById("preu").value.trim();
+            if(!precio){
+                alert("Preu no introduït!");
+                return;
+            }       
+            const price = comprovacioPreu(precio);
+            //si el preu es menor a 0 => valor entrat com preu es incorrecte
+            if(preu < 0){
+                alert("Preu introduït no vàlid!");
+                return;
+            }
+            const quantitat_disponible = document.getElementById("quantitat_disponible").value;
+            const imatge = document.getElementById("url_imatge").value
+
+            //si hi ha camps buits => missatge d'avis
+            if (!nom_producte || !descripcio_producte || !price || !quantitat_disponible || !imatge) {
+                alert("No pot haver camps buits!");
+                return;
+            }
+
+            // Capturar els valors del formulari
+            const formData = {
+                nom : nom_producte,
+                descripcio : descripcio_producte,
+                preu: price,
+                stock : quantitat_disponible,
+                url_imatge : imatge
+            };
+
+            console.log("Dades del formulari:", formData);
+
+            //aqui fer la peticio fetch
+
+
+            //si fetch ok
+
+            //finalment conduir l'usuari a una altra pagina o mostrar un missatge
+            //window.location.href = 'venedor_menu_inici.html';
+        });
+    }else{
+        console.log('Botón no encontrado');
+    }
 });
 
 
-//funcio que valida el preu entrat; admet nombres enters i decimals
+//funcio que valida el preu entrat; admet numeros enters i decimals
 function comprovacioPreu(entrada){
     let precioString = entrada.replace(",", ".").trim();
     
-    // Verificar si es un número válido usando una expresión regular
+    //verificar si es un numero es valid
     if (/^\d+(\.\d{1,2})?$/.test(precioString)) {
         let precioNumero = parseFloat(precioString);
     
@@ -105,11 +159,11 @@ function comprovacioPreu(entrada){
             //retornem el valor del preu passat a float/decimal
             return precioNumero;
         } else {
-            console.log("Error: el precio debe ser un número positivo.");
+            console.log("Error: el preu ha de ser un número positiu.");
             return -1;
         }
     } else {
-        console.log("Error: formato de precio inválido.");
+        console.log("Error: format de preu invalid.");
         alert("El preu introduït no és vàlid!");
         return -1;
     }

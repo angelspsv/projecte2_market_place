@@ -1,47 +1,50 @@
 document.addEventListener("DOMContentLoaded", function () {
     const buttonsContainer = document.getElementById("buttons-container");
 
-
     //faig el logo-home que si rep click portara el usuari a la pagina index / inici
     const logo = document.createElement('img');
     logo.src = 'imatges_angel/sprout_346246.png';
     logo.alt = 'GO to home';
     logo.addEventListener('click', function(){
-    window.location.href = 'venedor_menu_inici.html';
+        window.location.href = 'comprador_menu_inici.html';
     });
     document.getElementById('logo_home').appendChild(logo);
 
 
-
+    //obtenim el nom del fitxer actual per deshabilitar el boto corresponent
+    const currentPage = window.location.pathname.split("/").pop();
 
     //fem un array amb el text dels botons i les urls
     const buttons = [
-        { text: "Les meves dades", link: "dades_venedor.html" },
-        { text: "Les meves comandes", link: "venedor_comandes.html" },
-        { text: "Pujar nou producte", link: "pujar_producte.html" },
-        { text: "Tancar sessió", link: "tancar_sessio.html" }
+        { text: "Les meves dades", link: "dades_comprador.html" },
+        { text: "Les meves comandes", link: "comprador_comandes.html" },
+        { text: "Tancar sessió", link: "tancar_sessio.html" },
+        { imgSrc: "imatges_angel/216477_shopping_cart_icon.png", link: "cistella_resum_comanda.html" }
     ];
 
-    //obtenim el nom del fitxer actual
-    const currentPage = window.location.pathname.split("/").pop(); 
-
-    //bucle per generar dinamicament els botons
+    //bucle per generar dinàmicament els botons
     buttons.forEach(button => {
         let btnElement = document.createElement("a");
-        btnElement.textContent = button.text;
         btnElement.href = button.link;
         btnElement.classList.add("btn");
 
-        //si la pagina actual es la mateixa que el link, marquem el boto com actiu
-        if (currentPage === button.link) {
-            btnElement.classList.add("active");
-            btnElement.removeAttribute("href"); //evita que el usuari pugui fer click ovament al boto
+        if (button.imgSrc) {
+            let imgElement = document.createElement("img");
+            imgElement.src = button.imgSrc;
+            imgElement.alt = "Carrito";
+            imgElement.classList.add("icono-cistella"); // Afegim classe CSS
+            btnElement.appendChild(imgElement);
+        } else {
+            btnElement.textContent = button.text;
         }
 
+        // Si el botó és el de la pàgina actual, afegim classe "active" i eliminem l'enllaç
+        if (currentPage === button.link) {
+            btnElement.classList.add("active");
+            btnElement.removeAttribute("href"); // Evita que l'usuari pugui fer clic de nou
+        }
         buttonsContainer.appendChild(btnElement);
     });
-
-
 
 
     //codi per recuperar la cookie
@@ -59,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-    //recuperar dades cookie
+    //recuperar cookie
     const userEmail = getCookie('user_email');
     const userName = getCookie('user_name');
     const userType = getCookie('user_type');
@@ -69,7 +72,6 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log('Nombre:', userName);
     console.log('Tipo de usuario:', userType);
     console.log('ID usuari:', userId);
-    
 
     //salutacio al usuari
     let nom = userName;  //hauria de mostrar el nom del usuari real
@@ -84,7 +86,5 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-
-
-    //funcio per recuperar les dades de la api del usuari i mostrar-les
+    
 });
