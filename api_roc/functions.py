@@ -26,10 +26,11 @@ def users_schema(uresult) -> dict:
 # Rep una tupla amb les dades del producte i retorna un diccionari
 def product_schema(product) -> dict:
     return {
-        "nom": product[0],
-        "desc": product[1],
-        "stock": product[2],
-        "preu": product[3],
+        "nom": product[2],
+        "desc": product[3],
+        "preu": product[4],
+        "stock": product[5],
+        "url_imatge": product[6]
     }
 
 # Rep una tupla de productes i retorna una lista de diccionaris
@@ -146,6 +147,7 @@ def read_productes(id):
         if products is None:
             return {"productes": None}
         else:
+            print("AQUIIIIIIIIIIII")
             print(products_schema(products))
             return products_schema(products)
 

@@ -28,24 +28,7 @@ class SellerHomeFragment : Fragment() {
         val userId = 3 // Exemple
 
         CoroutineScope(Dispatchers.IO).launch {
-            val response = RetrofitClient.apiService.getProductsByUserId(userId)
-            val rawProductList = response["productes"] as? List<List<Any>> ?: emptyList()
-
-            val productList = rawProductList.map
-
-
-            val productList = rawProductList.map { product ->
-                Producte(
-                    id = product[0] as Int,
-                    idVenedor = product[1] as Int,
-                    nom = product[2] as String,
-                    descripcio = product[3] as String,
-                    preu = (product[4] as String).toDouble(),
-                    stock = product[5] as Int,
-                    urlImatge = product[6] as String,
-                    dataCreacio = (product[7] as String).toDate()?: LocalDateTime.now()
-                )
-            }
+            val productList: List<Producte> = RetrofitClient.apiService.getProductsByUserId(userId)
 
             withContext(Dispatchers.Main) {
                 val adapter = ProductAdapter(productList)

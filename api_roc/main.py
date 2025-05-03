@@ -42,7 +42,7 @@ async def retornar_contrasenya(email: str):
 
 
 # Enpoint per retornar una llista amb tots els productes d'un venedor determinat a partir de la seva ID
-@app.get("/productes/{id}", response_model=dict)
+@app.get("/productes/{id}", response_model=List[dict])
 async def retornar_productes(id: int):
     return read_productes(id)
 

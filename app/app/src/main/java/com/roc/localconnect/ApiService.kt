@@ -23,9 +23,8 @@ interface ApiService {
     @GET("login/{email}")
     fun getLogin(@Path("email") email: String): Call<LoginResponse>
 
-    // Endpoint GET /productes/{id}
     @GET("productes/{id}")
-    suspend fun getProductsByUserId(@Path("id") userId: Int): Map<String, List<List<Any>>>
+    fun getProductsByUserId(@Path("id") userId: Int): List<Producte>
 
     // Endpoint POST /nou_usuari/
     @POST("nou_usuari/")
