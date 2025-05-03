@@ -27,6 +27,8 @@
         <activity android:name=".StartActivity" />
         <activity android:name=".LogInActivity" />
         <activity android:name=".RegisterActivity" />
+        <activity android:name=".BuyerMainActivity" />
+        <activity android:name=".SellerMainActivity" />
     </application>
 
 </manifest>

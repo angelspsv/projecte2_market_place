@@ -2,6 +2,7 @@ package com.roc.localconnect
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 
@@ -10,6 +11,8 @@ class StartActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.start_activity)
+
+        Log.d("ACTIVITY", "StartActivity")
 
         findViewById<Button>(R.id.login_button).setOnClickListener()
         { startActivity(Intent(this, LogInActivity::class.java)) }

@@ -1,7 +1,10 @@
 package com.roc.localconnect
-import android.R
 import retrofit2.Call
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
     // Endpoint GET /
@@ -18,7 +21,11 @@ interface ApiService {
 
     // Endpoint GET /login/{email}
     @GET("login/{email}")
-    fun getLogin(@Path("email") email: String): Call<Map<String, Any>>
+    fun getLogin(@Path("email") email: String): Call<LoginResponse>
+
+    // Endpoint GET /productes/{id}
+    @GET("productes/{id}")
+    suspend fun getProductsByUserId(@Path("id") userId: Int): Map<String, List<List<Any>>>
 
     // Endpoint POST /nou_usuari/
     @POST("nou_usuari/")

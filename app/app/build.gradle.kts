@@ -57,4 +57,9 @@ dependencies {
     implementation(libs.gson)
 
     implementation(libs.okhttpLoggingInterceptor)
+    implementation(libs.androidxCardview)
+
+    implementation(libs.coroutinesCore)
+    implementation(libs.coroutinesAndroid)
+
 }

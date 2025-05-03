@@ -37,5 +37,6 @@ def get_db_conection():
 
         print("✅ Conexión exitosa a MySQL")
         return connection, tunnel
+    
     except Exception as e:
         return {"status": -1, "message": f"❌ Error de conexión: {e}"}

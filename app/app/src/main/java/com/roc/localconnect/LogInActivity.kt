@@ -1,5 +1,6 @@
 package com.roc.localconnect
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -31,20 +32,35 @@ class LogInActivity : AppCompatActivity() {
                     showToast("Introdueix una contrasenya")
                 }
                 else -> {
-                    RetrofitClient.apiService.getLogin(email).enqueue(object : Callback<Map<String, String?, Boolean?>> {
+                    RetrofitClient.apiService.getLogin(email).enqueue(object : Callback<LoginResponse> {
 
-                        override fun onResponse(call: Call<Map<String, String?, Boolean?>>, response: Response<Map<String, String?, Boolean?>>) {
+                        override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+
                             if (response.isSuccessful) {
-                                val password = response.body()?.get("contrasenya")
-                                val userType = response.body()?.get("user_type")
-                                handleLoginResult(password, inputPassword, userType)
+
+                                val loginResponse = response.body()
+                                Log.d("RESPONSE_BODY", response.body().toString())
+
+                                val password = loginResponse?.password
+                                Log.d("PASSWORD", password?.toString() ?: "NULL")
+
+                                val userType = loginResponse?.userType
+                                Log.d("USERTYPE", userType?.toString() ?: "NULL")
+
+                                handleLoginResult(password, inputPassword, userType, email)
+
                             } else {
+
                                 Log.e("API", "Error en la respuesta HTTP: Código ${response.code()}")
+
                             }
+
                         }
 
-                        override fun onFailure(call: Call<Map<String, String?, Boolean?>>, t: Throwable) {
+                        override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+
                             Log.e("API", "La call ha fallat pel següent motiu: ${t.message}", t)
+
                         }
 
                     })
@@ -53,16 +69,34 @@ class LogInActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleLoginResult(password: String?, inputPassword: String, userType: Boolean) {
+    private fun handleLoginResult(password: String?, inputPassword: String, userType: Int?, userEmail: String?) {
+
         when {
             password == null -> showToast("Credencials incorrectes")
             inputPassword == password -> {
-                Log.d("LOGIN_RESULT", "SUCCESS!!!!!")
-                if (userType)
+
+                Log.d("LOGIN_RESULT", "SUCCESS")
+
+                val sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+                with(sharedPref.edit()) {
+                    putString("email", userEmail)
+                    putInt("user_type", userType!!) // "buyer" o "seller"
+                    apply()
+                }
+
                 // Redirigir el user al seu landing
+                val intent = when (userType) {
+                    1 -> Intent(this, SellerMainActivity::class.java) // Venedor
+                    0 -> Intent(this, BuyerMainActivity::class.java) // Comprador
+                    else -> Intent(this, LogInActivity::class.java)  // Fallback
+                }
+                startActivity(intent)
+                finish()
+
             }
             else -> showToast("Contrasenya incorrecta")
         }
+
     }
 
     private fun showToast(message: String) {
