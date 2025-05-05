@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
         { text: "Les meves dades", link: "dades_comprador.html" },
         { text: "Les meves comandes", link: "comprador_comandes.html" },
         { text: "Tancar sessió", link: "tancar_sessio.html" },
-        { imgSrc: "imatges_angel/216477_shopping_cart_icon.png", link: "cistella.html" }
+        { imgSrc: "imatges_angel/216477_shopping_cart_icon.png", link: "cistella_resum_comanda.html" }
     ];
 
     buttons.forEach(button => {
@@ -372,16 +372,60 @@ function mostrarProductesVenedorAmbComptador(productes, usuari){
                 }
             });
 
-            // Afegim els elements al contenidor
+            //afegim els elements al contenidor
             afegirTreureContainer.appendChild(btnAfegir);
             afegirTreureContainer.appendChild(spanQuantitat);
             afegirTreureContainer.appendChild(btnRestar);
-            
+
+            //faig un contenidor div dins de cada producte pel boto afegirCistella
+            const contenidorBtn = document.createElement("div");
+            contenidorBtn.className = "contenidor-boto-cistella";
+
+            //afegim boto per afegir producte a la cistella
+            const btnAfegirCistella = document.createElement("button");
+            btnAfegirCistella.textContent = "Afegir a la cistella";
+            btnAfegirCistella.className = "btn-cistella";
+            btnAfegirCistella.addEventListener("click", () => {
+                const quantitat = parseInt(spanQuantitat.textContent);
+                if(quantitat > 0){
+                    const producte = {
+                        id: prod.id,
+                        nom: prod.nom,
+                        preu: prod.preu,
+                        quantitat: quantitat,
+                        imatge: prod.url_imatge
+                    };
+
+                    //llegim l'array existent o iniciem un nou
+                    let cistella = JSON.parse(localStorage.getItem("cistella")) || [];
+
+                    //mirem si ja existeix el producte
+                    const existent = cistella.find(p => p.id === producte.id);
+                    if(existent){
+                        existent.quantitat += producte.quantitat;
+                    }else{
+                        cistella.push(producte);
+                    }
+
+                    //desem de nou
+                    localStorage.setItem("cistella", JSON.stringify(cistella));
+
+                    alert("Producte afegit a la cistella!");
+                }
+            });
+
+            //afegim botoAfegir al contenidor per aquest
+            contenidorBtn.appendChild(btnAfegirCistella);
     
             //afegim diferents elements al card/contenidor de producte
             card.appendChild(img);
             card.appendChild(info);
             card.appendChild(afegirTreureContainer);
+            card.appendChild(contenidorBtn);
+            
+
+
+            //card.appendChild(btnAfegirCistella);
             
             //afegim el producte a la filera
             fila.appendChild(card);

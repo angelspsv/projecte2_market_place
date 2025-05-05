@@ -105,3 +105,59 @@ body {
     align-items: center;
     gap: 8px; /* Ajusta la separación entre el logo y el saludo */
 }
+
+h2 {
+    padding-left: 80px;
+}
+
+
+#visualitzacio_resum_comanda_cistella {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+}
+
+.producte-resum {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.imatge-producte {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 20px;
+    border-radius: 8px;
+}
+
+.info-producte {
+    flex: 1;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.total-final {
+    margin-top: 20px;
+    text-align: right;
+    font-size: 20px;
+    font-weight: bold;
+    color: #2c662d;
+    border-top: 2px solid #ccc;
+    padding-top: 15px;
+}
+
+#boto_per_anar_pagament {
+    margin-top: 20px;
+    text-align: right; 
+    padding-right: 70px;
+    margin-bottom: 40px;
+}
+

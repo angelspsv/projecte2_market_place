@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     logo.src = 'imatges_angel/sprout_346246.png';
     logo.alt = 'GO to home';
     logo.addEventListener('click', function(){
-    window.location.href = 'comprador_menu_inici.html';
+        window.location.href = 'comprador_menu_inici.html';
     });
     document.getElementById('logo_home').appendChild(logo);
 
@@ -94,5 +94,52 @@ document.addEventListener("DOMContentLoaded", function () {
     //al final de tot hauria de redirigir l'usuari a
     //               cistella_pagament.html
 
+    //recuperem els productes seleccionats del localStorage
+    const container = document.getElementById('visualitzacio_resum_comanda_cistella');
 
+    //recuperar productes de localStorage
+    const cistella = JSON.parse(localStorage.getItem("cistella")) || [];
+
+    //comprovar si la cistella esta buida
+    if (cistella.length === 0) {
+        container.textContent = "La teva cistella està buida.";
+        return;
+    }
+
+    //mostrar cada producte
+    cistella.forEach(producte => {
+        const card = document.createElement("div");
+        card.className = "producte-resum";
+
+        card.innerHTML = `
+            <img src="${producte.imatge}" alt="${producte.nom}" class="imatge-producte">
+            <div class="info-producte">
+                <strong>${producte.nom}</strong><br>
+                Quantitat: ${producte.quantitat}<br>
+                Preu unitari: ${parseFloat(producte.preu).toFixed(2)}€<br>
+                Total: ${(parseFloat(producte.preu) * producte.quantitat).toFixed(2)}€
+            </div>
+        `;
+
+        container.appendChild(card);
+    });
+
+    //mostrar total de la comanda
+    const total = cistella.reduce((sum, prod) => sum + parseFloat(prod.preu) * prod.quantitat, 0);
+    const totalElement = document.createElement("div");
+    totalElement.className = "total-final";
+    totalElement.innerHTML = `<strong>Total de la comanda: ${total.toFixed(2)}€</strong>`;
+    container.appendChild(totalElement);
+
+
+    //fem boto per dirigir l'usuari a l'etapa d'introduir les seves dades bancaries i 
+    //proseguir amb el proces de pagament
+    const espaiBoto = document.getElementById('boto_per_anar_pagament');
+    const btnGoToPay = document.createElement('button');
+    btnGoToPay.textContent = 'Continuar i pagar';
+    btnGoToPay.classList.add('btn');
+    btnGoToPay.addEventListener('click', function(){
+        window.location.href = 'cistella_pagament.html';
+    });
+    espaiBoto.appendChild(btnGoToPay);
 });
