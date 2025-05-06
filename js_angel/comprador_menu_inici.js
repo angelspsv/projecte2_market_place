@@ -196,8 +196,8 @@ function mostrarProductesVenedorsSenseComptador(productes){
             info.innerHTML = `
                 <strong>${prod.nom}</strong><br>
                 ${prod.descripcio}<br>
-                Preu: ${prod.preu}€<br>
-                Quantitat: ${prod.stock}kg/uds
+                Quantitat disp.: ${prod.stock}kg<br>
+                Preu: ${prod.preu}€/kg
             `;
     
             //afegim diferents elements al card/contenidor de producte
@@ -338,8 +338,8 @@ function mostrarProductesVenedorAmbComptador(productes, usuari){
             info.innerHTML = `
                 <strong>${prod.nom}</strong><br>
                 ${prod.descripcio}<br>
-                Preu: ${prod.preu}€<br>
-                Quantitat: ${prod.stock}kg/uds
+                Quantitat disp.: ${prod.stock}kg<br>
+                Preu: ${prod.preu}€/kg
             `;
 
             
@@ -387,32 +387,43 @@ function mostrarProductesVenedorAmbComptador(productes, usuari){
             btnAfegirCistella.className = "btn-cistella";
             btnAfegirCistella.addEventListener("click", () => {
                 const quantitat = parseInt(spanQuantitat.textContent);
-                if(quantitat > 0){
-                    const producte = {
-                        id: prod.id,
-                        nom: prod.nom,
-                        preu: prod.preu,
-                        quantitat: quantitat,
-                        imatge: prod.url_imatge
-                    };
-
-                    //llegim l'array existent o iniciem un nou
-                    let cistella = JSON.parse(localStorage.getItem("cistella")) || [];
-
-                    //mirem si ja existeix el producte
-                    const existent = cistella.find(p => p.id === producte.id);
-                    if(existent){
-                        existent.quantitat += producte.quantitat;
-                    }else{
-                        cistella.push(producte);
+            
+                //llegim la cistella del localStorage o fem un nou array
+                let cistella = JSON.parse(localStorage.getItem("cistella")) || [];
+                const existentIndex = cistella.findIndex(p => p.id === prod.id);
+            
+                if (existentIndex !== -1) {
+                    if (quantitat === 0) {
+                        //eliminar producte de la cistella si la quantitat és 0
+                        cistella.splice(existentIndex, 1);
+                        alert("Producte eliminat de la cistella!");
+                    } else {
+                        //actualitzar la quantitat si el producte ja existeix
+                        cistella[existentIndex].quantitat = quantitat;
+                        alert("Quantitat actualitzada a la cistella!");
                     }
-
-                    //desem de nou
-                    localStorage.setItem("cistella", JSON.stringify(cistella));
-
-                    alert("Producte afegit a la cistella!");
+                } else {
+                    if (quantitat > 0) {
+                        //afegir un nou producte si no existeix i quantitat > 0
+                        const producte = {
+                            id: prod.id,
+                            nom: prod.nom,
+                            preu: prod.preu,
+                            quantitat: quantitat,
+                            imatge: prod.url_imatge
+                        };
+                        cistella.push(producte);
+                        alert("Producte afegit a la cistella!");
+                    } else {
+                        //no fer res si quantitat = 0 i producte no existeix
+                        return;
+                    }
                 }
+            
+                //deser la cistella actualitzada
+                localStorage.setItem("cistella", JSON.stringify(cistella));
             });
+            
 
             //afegim botoAfegir al contenidor per aquest
             contenidorBtn.appendChild(btnAfegirCistella);
@@ -423,9 +434,6 @@ function mostrarProductesVenedorAmbComptador(productes, usuari){
             card.appendChild(afegirTreureContainer);
             card.appendChild(contenidorBtn);
             
-
-
-            //card.appendChild(btnAfegirCistella);
             
             //afegim el producte a la filera
             fila.appendChild(card);

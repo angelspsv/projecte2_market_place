@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     //mostrar cada producte
-    cistella.forEach(producte => {
+    cistella.forEach((producte, index) => {
         const card = document.createElement("div");
         card.className = "producte-resum";
 
@@ -116,19 +116,46 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="info-producte">
                 <strong>${producte.nom}</strong><br>
                 Quantitat: ${producte.quantitat}<br>
-                Preu unitari: ${parseFloat(producte.preu).toFixed(2)}€<br>
+                Preu: ${parseFloat(producte.preu).toFixed(2)}€/kg<br>
                 Total: ${(parseFloat(producte.preu) * producte.quantitat).toFixed(2)}€
             </div>
         `;
 
+        //crear boto eliminar un producte del resum-cistella-localStorage
+        const btnEliminar = document.createElement("button");
+        btnEliminar.textContent = "Eliminar";
+        btnEliminar.className = "btn-eliminar";
+        btnEliminar.addEventListener("click", () => {
+            //esborrem producte del array de productes en el localStorage
+            cistella.splice(index, 1);
+            //actualitzar localStorage
+            localStorage.setItem("cistella", JSON.stringify(cistella));
+            //recargar la pagina
+            location.reload();
+        });
+
+        card.appendChild(btnEliminar);
         container.appendChild(card);
     });
 
-    //mostrar total de la comanda
-    const total = cistella.reduce((sum, prod) => sum + parseFloat(prod.preu) * prod.quantitat, 0);
+    
+    //calcular total de productes
+    const totalBase = cistella.reduce((sum, prod) => sum + parseFloat(prod.preu) * prod.quantitat, 0);
+
+    //definir l'import de la comissió de serveis
+    const comissio = 1.00;
+
+    //el total final amb comissió
+    const totalFinal = totalBase + comissio;
+
+    //contenidor per mostrar el total amb desglossament
     const totalElement = document.createElement("div");
     totalElement.className = "total-final";
-    totalElement.innerHTML = `<strong>Total de la comanda: ${total.toFixed(2)}€</strong>`;
+    totalElement.innerHTML = `
+        <p><strong>Subtotal:</strong> ${totalBase.toFixed(2)}€</p>
+        <p><strong>Comissió serveis:</strong> ${comissio.toFixed(2)}€</p>
+        <p><strong>Total de la comanda:</strong> ${totalFinal.toFixed(2)}€</p>
+    `;
     container.appendChild(totalElement);
 
 
