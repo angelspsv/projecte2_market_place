@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     logo.src = 'imatges_angel/sprout_346246.png';
     logo.alt = 'GO to home';
     logo.addEventListener('click', function(){
-    window.location.href = 'comprador_menu_inici.html';
+        window.location.href = 'comprador_menu_inici.html';
     });
     document.getElementById('logo_home').appendChild(logo);
 
@@ -98,13 +98,18 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-
+    //recuperem les dades de la comanda del resum_comanda
+    const resumComanda = JSON.parse(localStorage.getItem("resum_comanda"));
+    if (resumComanda) {
+        console.log("Productes:", resumComanda.productes);
+        console.log("Total:", resumComanda.total);
+    }
 
 
     //codi pel formulari de pagament
     const accioButton = document.querySelector('.submit-btn');
+    console.log(accioButton); //depuracio
     if (accioButton){
-        console.log('Botó trobat');
         accioButton.addEventListener('click', function(event){
             //evitem que la pagina es regarregues
             event.preventDefault(); 
@@ -114,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const titular_targeta = document.getElementById("nom_targeta").value.trim().toLowerCase();
             const numero_targeta = document.getElementById("num_targeta").value.trim();
             const camp_cvv = document.getElementById("cvv").value.trim().toLowerCase();      
-            const caducidad = document.getElementById("caducitat").value.trim().toLowerCase();
+            const caducidad = document.getElementById("caducitat").value.trim();
             const direccio = document.getElementById("address").value.trim().toLowerCase();
             const fra_entrega = document.getElementById("franja_entrega").value.trim();
 
@@ -125,17 +130,55 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
 
-            // aqui calen mes comprovacions
+            //num targeta nomes nums i nums=16
+            if(numero_targeta.length !== 16){
+                alert("Longitud de targeta entrada incorrecte!");
+                return;
+            }
 
-            //num targeta nomes nums i ==16
+            if(!nomesNums(numero_targeta)){
+                alert("Per la targeta del banc: només s'admeten números!");
+                return;
+            }
 
             //el cvv nomes 3 lletres
+            if(camp_cvv.length !== 3){
+                alert("Longitud del CVV entrat incorrecte!");
+                return;
+            }
+
+            if(!cvvCorrecte(camp_cvv)){
+                alert("El camp CVV només admét lletres!");
+                return;
+            }
+
 
             //caducitat: chars 0,1,3 i 4 -> nums; char[2] == '/'
+            if(caducidad.length !== 5){
+                alert("La longitud de la caducitat de la targeta no és correcta!");
+                return;
+            }
+
+            if(!esValidaDataTargeta(caducidad)){
+                alert("El camp caducitat entrat no és correcte!");
+                return;
+            }
 
             // franja d'entrega: chars 0,1,3 i 4 -> nums; char[2] == ':'
+            if(fra_entrega.length !== 5){
+                alert("La longitud de la franja horaria no és correcta!");
+                return;
+            }
 
+            if(!esFranjaValida(fra_entrega)){
+                alert("El camp de franja horaria no té el format correcte!");
+                return;
+            }
+            
 
+            //aqui obtenir el id_venedor per despres passar-ho al objecte i l'insert de comanda
+
+            
 
             // Capturar els valors del formulari
             // *** les keyes de l'objecte hauran de tenir el mateix nom que els camps de la bbdd
@@ -145,15 +188,22 @@ document.addEventListener("DOMContentLoaded", function () {
                 "camp_cvv": camp_cvv,
                 "caducidad": caducidad,
                 "direccio": direccio,
-                "fra_entrega": fra_entrega
+                "fra_entrega": fra_entrega,
+                "id_comprador": userId,
+                "recollit": 0,
+                "preu_total": resumComanda.total
+                //falta ID_venedor: ¿como conseguirlo?
+                //cistella_pagament recibe id_productos -> fetch de /producte/id 
+                //retorna un objeto json y de allí coger id_vendedor
             };
 
             console.log("Dades del formulari:", formData);
 
-            //aqui fer peticio fetch
+            //aqui fer peticio fetch POST/insert a la taula COMANDA
 
 
-            //i finalment conduir l'usuari a una altra pagina o mostrar un missatge
+            //i finalment conduir l'usuari a la pagina de les seves comandes
+            //window.location.href = 'comprador_comandes.html';
 
         });
     }else{
@@ -161,9 +211,25 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-
-
-
-
-
 });
+
+//FUNCIONS REGULARS
+//funcio regular per comprovar que la targeta entrada per l'usuari son 16 nums
+function nomesNums(str){
+    return /^\d{16}$/.test(str);
+}
+
+//funcio que comprova 
+function cvvCorrecte(str){
+    return /^[A-Za-z]{3}$/.test(str);
+}
+
+//funcio per comprovar la validesa d'una targeta
+function esValidaDataTargeta(fecha) {
+    return /^(0[1-9]|1[0-2])\/\d{2}$/.test(fecha);
+}
+
+//funcio per validar la franja horari d'entrega
+function esFranjaValida(franja) {
+    return /^(0[0-9]|1[0-9]|2[0-3]):(0[0-9]|1[0-9]|2[0-3])$/.test(franja);
+}

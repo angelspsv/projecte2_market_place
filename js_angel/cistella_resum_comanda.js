@@ -159,6 +159,18 @@ document.addEventListener("DOMContentLoaded", function () {
     container.appendChild(totalElement);
 
 
+    //afegim al localStorage un resum de la comanda
+    //per despres accedir a aquest des de la seguent fase del pagament
+    const resumComanda = {
+        productes: cistella,
+        subtotal: totalBase.toFixed(2),
+        comissio: comissio.toFixed(2),
+        total: totalFinal.toFixed(2)
+    };
+    localStorage.setItem("resum_comanda", JSON.stringify(resumComanda));
+
+
+
     //fem boto per dirigir l'usuari a l'etapa d'introduir les seves dades bancaries i 
     //proseguir amb el proces de pagament
     const espaiBoto = document.getElementById('boto_per_anar_pagament');
