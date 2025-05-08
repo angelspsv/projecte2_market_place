@@ -145,8 +145,8 @@ function mostrarProductesVenedor(productes){
             info.innerHTML = `
                 <strong>${prod.nom}</strong><br>
                 ${prod.descripcio}<br>
-                Preu: ${prod.preu}€<br>
-                Quantitat: ${prod.stock}kg/uds
+                Quantitat disp.: ${prod.stock}kg<br>
+                Preu: ${prod.preu}€/kg
             `;
     
             //botons
