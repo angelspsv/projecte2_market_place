@@ -213,16 +213,50 @@ document.addEventListener("DOMContentLoaded", function () {
                 "recollit": 0,
                 "preu_total": parseFloat(resumComanda.total).toFixed(2),
                 "franja_entrega": fra_entrega,
-                "targeta": numero_targeta                
+                "targeta": targeta                
             };
 
-            console.log("Dades del formulari:", formData);
-
+            console.log(`Dades del formulari:", ${titular_targeta}, ${numero_targeta}, ${camp_cvv}, ${caducidad}, ${direccio}, ${fra_entrega},`);
+            console.log("Dades a enviar de la comanda:", JSON.stringify(formData)); //depuracio
+            
+            
             //aqui fer peticio fetch POST/insert a la taula COMANDA
+            try {
+                const response = await fetch("http://127.0.0.1:8000/nova_comanda/", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                console.log("Resposta de la API:", response.status, response.statusText); //depuracio
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`HTTP ${response.status}: ${errorText}`);
+                }
+
+                const data = await response.json();
+                console.log("Resposta JSON:", data); //depuracio
+
+                if (data.detail) {
+                    alert("Error al finalitzar la compra: " + data.detail);
+                } else {
+                    alert("Compra finalitzada correctament!");
+
+                    //cal esborrar cistella i resum_comanda del localStage per finalitzar la compra
+                    localStorage.removeItem("cistella");
+                    localStorage.removeItem("resum_comanda");
 
 
-            //i finalment conduir l'usuari a la pagina de les seves comandes
-            //window.location.href = 'comprador_comandes.html';
+                    //i finalment conduir l'usuari a la pagina de les seves comandes
+                    window.location.href = 'comprador_comandes.html';
+                }
+            } catch (error) {
+                alert("Error en finalitzar la compra. " + error.message);
+                console.error("Error detallat:", error);
+            }
 
         });
     }else{
