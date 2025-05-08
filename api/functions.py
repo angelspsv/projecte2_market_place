@@ -382,3 +382,70 @@ def update_producte(id, producte):
             conn.close()
 
 
+# insert de nova comanda a la base de dades
+def insert_nova_comanda(comanda):
+    try:
+        #connectem a la bbdd
+        conn = connexio_db()
+        cur = conn.cursor()
+        #preparem l'insert per la taula
+        cur.execute("INSERT INTO comanda (id_comprador, id_venedor, recollit, preu_total, franja_entrega, targeta) VALUES (%s, %s, %s, %s, %s, %s)", (comanda.id_comprador, comanda.id_venedor, comanda.recollit, comanda.preu_total, comanda.franja_entrega, comanda.targeta))
+        #desem els canvis a la taula/bbdd
+        conn.commit()
+        return {"message" : "inserit nova comanda amb exit"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f'Error a la bbdd: {str(e)}')
+    finally:
+        cur.close()
+        conn.close()
+
+
+
+#rep una tupla i retorna un diccionari de comanda
+def comanda_schema(comanda) -> dict:
+    return {
+        "id": comanda[0],
+        "id_comprador": comanda[1],
+        "id_venedor": comanda[2],
+        "recollit": comanda[3],
+        "preu_total": comanda[4],
+        "franja_entrega": comanda[5],
+        "targeta": comanda[6],
+        "creat_a": comanda[7]
+    }
+
+
+
+# rep una tupla de productes i retorna una llista de diccionaris
+def comandes_schema(comandes) -> dict:
+    return [comanda_schema(comanda) for comanda in comandes]
+
+
+# metode READ / GET per retornar totes les comandes del mateix comprador
+def read_comandes_comprador(id):
+    try:
+        conn = connexio_db()
+        if not conn:  
+            raise HTTPException(status_code=500, detail="No connection data base")  
+        
+        cursor = conn.cursor()  
+        cursor.execute("SELECT * FROM comanda WHERE id_comprador = %s", (id,))
+        products = cursor.fetchall()
+
+        if products is None:
+            raise HTTPException(status_code=404, detail="Usuari amb ID ${id} no te comandes a la taula Comanda")
+
+        return products
+
+    except mysql.connector.Error as e:
+        raise HTTPException(status_code=500, detail=f"Error en obtenir les comandes: {e}")
+    
+    finally:
+        if conn.is_connected():
+            cursor.close()
+            conn.close()
+
+
+
+
+

@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const accioButton = document.querySelector('.submit-btn');
     console.log(accioButton); //depuracio
     if (accioButton){
-        accioButton.addEventListener('click', function(event){
+        accioButton.addEventListener('click', async function(event){
             //evitem que la pagina es regarregues
             event.preventDefault(); 
             console.log('Botó clicat');
@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             if(!cvvCorrecte(camp_cvv)){
-                alert("El camp CVV només admét lletres!");
+                alert("El camp CVV només admét números!");
                 return;
             }
 
@@ -176,25 +176,44 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             
 
+            //falta ID_venedor: ¿como conseguirlo?
+            //cistella_pagament recibe id_productos -> fetch de /producte/id 
+            //retorna un objeto json y de allí coger id_vendedor
             //aqui obtenir el id_venedor per despres passar-ho al objecte i l'insert de comanda
+            //agafem l'id del primer producte del resum de la comanda des del localStorage
+            const id_producte = resumComanda.productes[0].id;
+            if(!id_producte){
+                alert('No hi ha productes a la cistella!');
+                return;
+            }
 
-            
+            const dataProducte = await obtenirDadesProducte(id_producte);
+            //mirem si producte existeix
+            if(!dataProducte){
+                alert(`Fallo en l'obtenció de dades del producte!`);
+                return;
+            }
+            //finalment obtenim el id del venedor
+            const venedor_id = dataProducte.id_venedor
+
+
+            //ara nomes falta fer un String (csv) amb les dades del banc de l'usuari
+            //format: "num_tarjeta,camp_cvv,caducitat"
+            const targeta = "" + numero_targeta + "," + camp_cvv + "," + caducidad;
+            //depuracio dades targeta
+            console.log(targeta);
+
 
             // Capturar els valors del formulari
             // *** les keyes de l'objecte hauran de tenir el mateix nom que els camps de la bbdd
+            //cal incloure: titular_targeta i direccio
             const formData = {
-                "titular_targeta": titular_targeta,
-                "targeta": numero_targeta,
-                "camp_cvv": camp_cvv,
-                "caducidad": caducidad,
-                "direccio": direccio,
-                "fra_entrega": fra_entrega,
-                "id_comprador": userId,
+                "id_comprador": Number(userId),
+                "id_venedor": venedor_id,
                 "recollit": 0,
-                "preu_total": resumComanda.total
-                //falta ID_venedor: ¿como conseguirlo?
-                //cistella_pagament recibe id_productos -> fetch de /producte/id 
-                //retorna un objeto json y de allí coger id_vendedor
+                "preu_total": parseFloat(resumComanda.total).toFixed(2),
+                "franja_entrega": fra_entrega,
+                "targeta": numero_targeta                
             };
 
             console.log("Dades del formulari:", formData);
@@ -219,9 +238,9 @@ function nomesNums(str){
     return /^\d{16}$/.test(str);
 }
 
-//funcio que comprova 
+//funcio que comprova que nomes son numeros
 function cvvCorrecte(str){
-    return /^[A-Za-z]{3}$/.test(str);
+    return /^\d{3}$/.test(str);
 }
 
 //funcio per comprovar la validesa d'una targeta
@@ -232,4 +251,26 @@ function esValidaDataTargeta(fecha) {
 //funcio per validar la franja horari d'entrega
 function esFranjaValida(franja) {
     return /^(0[0-9]|1[0-9]|2[0-3]):(0[0-9]|1[0-9]|2[0-3])$/.test(franja);
+}
+
+
+//funcio asyncrona per obtenir les dades del producte a partir del ID de producte
+async function obtenirDadesProducte(id){
+    try {
+        const response = await fetch(`http://127.0.0.1:8000/producte/${id}`);
+
+        if (!response.ok) {
+            throw new Error('Producte no trobat');
+        }
+
+        const dadesProducte = await response.json();
+        console.log("Dades del producte:", dadesProducte);
+
+        //retornem les dades del producte
+        return dadesProducte;
+
+    } catch (error) {
+        console.error("Error al carregar les dades:", error.message);
+        alert("No s'han pogut carregar les dades del producte.");
+    }
 }

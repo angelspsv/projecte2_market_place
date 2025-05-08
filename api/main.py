@@ -145,3 +145,28 @@ async def actualitzar_producte(id: int, producte: Producte):
     return resultat
 
 
+
+# per validar les dades de Comanda abans del POST/insert
+class Compra(BaseModel):
+    id_comprador: int
+    id_venedor: int
+    recollit: int
+    preu_total: float
+    franja_entrega: str
+    targeta: str
+
+
+
+# endpoint nova comanda (POST/INSERT) a la taula COMANDA
+@app.post("/nova_comanda/", response_model=dict)
+async def create_nova_comanda(compra: Compra):
+    result = insert_nova_comanda(compra)
+    return result
+
+
+
+#endpoint per veure totes les comandes del mateix comprador
+@app.get("/comandes_comprador/{id}", response_model=List[dict])
+async def obtenir_comandes_comprador(id: int):
+    comandes = read_comandes_comprador(id)
+    return comandes_schema(comandes)
