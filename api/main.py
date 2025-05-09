@@ -170,3 +170,11 @@ async def create_nova_comanda(compra: Compra):
 async def obtenir_comandes_comprador(id: int):
     comandes = read_comandes_comprador(id)
     return comandes_schema(comandes)
+
+
+
+#endpoint per veure totes les comandes fetes al mateix venedor
+@app.get("/comandes_venedor/{id}", response_model=List[dict])
+async def obtenir_comandes_venedor(id: int):
+    comandes = read_comandes_venedor(id)
+    return comandes_schema(comandes)

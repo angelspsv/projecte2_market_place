@@ -448,4 +448,27 @@ def read_comandes_comprador(id):
 
 
 
+# metode READ / GET per retornar totes les comandes del mateix venedor
+def read_comandes_venedor(id):
+    try:
+        conn = connexio_db()
+        if not conn:  
+            raise HTTPException(status_code=500, detail="No connection data base")  
+        
+        cursor = conn.cursor()  
+        cursor.execute("SELECT * FROM comanda WHERE id_venedor = %s", (id,))
+        products = cursor.fetchall()
+
+        if products is None:
+            raise HTTPException(status_code=404, detail="Usuari amb ID ${id} no te comandes a la taula Comanda")
+
+        return products
+
+    except mysql.connector.Error as e:
+        raise HTTPException(status_code=500, detail=f"Error en obtenir les comandes: {e}")
+    
+    finally:
+        if conn.is_connected():
+            cursor.close()
+            conn.close()
 
