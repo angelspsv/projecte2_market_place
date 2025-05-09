@@ -1,0 +1,60 @@
+/* Contenidor principal del formulari d'edició */
+#dades_producte {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #f8f8f8;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center; 
+}
+
+/* Labels i inputs */
+#dades_producte label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+    text-align: left; 
+}
+
+#dades_producte input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+/* Botons */
+.btn-verd {
+    background-color: #4CAF50;
+    color: black;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background-color 0.3s;
+    margin: 10px 10px 0 10px;
+    display: inline-block;
+}
+
+.btn-verd:hover {
+    background-color: #3a833d;
+    color: white;
+}
+
+.btn-marge-esquerra {
+    margin-left: 10px; 
+}
+
+/* Títol o missatge */
+#dades_producte p {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+    color: #0a0a0a;
+}

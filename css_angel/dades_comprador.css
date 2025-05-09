@@ -107,3 +107,59 @@ body {
 }
 
 
+/* Estil principal del contenidor */
+#dades_comprador {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #f8f8f8;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+  
+  /* Estils pels labels i inputs */
+#dades_comprador label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+  
+#dades_comprador input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+  
+/* Estils pels botons */
+.btn-verd {
+    background-color: #4CAF50;
+    color: black;
+    border: none;
+    padding: 10px 16px;
+    margin-top: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background-color 0.3s;
+    margin-left: 30px;
+}
+  
+.btn-verd:hover {
+    background-color: #3a833d;
+    color: white;
+}
+
+
+.btn-marge-esquerra {
+    margin-left: 40px;
+}
+
+#dades_comprador p {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #0a0a0a;
+}

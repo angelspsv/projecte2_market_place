@@ -108,12 +108,20 @@ document.addEventListener("DOMContentLoaded", function () {
             }       
             const price = comprovacioPreu(precio);
             //si el preu es menor a 0 => valor entrat com preu es incorrecte
-            if(preu < 0){
+            if(price < 0){
                 alert("Preu introduït no vàlid!");
                 return;
             }
-            const quantitat_disponible = document.getElementById("quantitat_disponible").value;
+
             const imatge = document.getElementById("url_imatge").value
+            
+            
+            const quantitat_disponible = parseInt(document.getElementById("quantitat_disponible").value.trim());
+            if (isNaN(quantitat_disponible) || quantitat_disponible < 0) {
+                alert("Quantitat disponible no vàlida!");
+                return;
+            }
+
 
             //si hi ha camps buits => missatge d'avis
             if (!nom_producte || !descripcio_producte || !price || !quantitat_disponible || !imatge) {
@@ -123,6 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Capturar els valors del formulari
             const formData = {
+                id_venedor : userId,
                 nom : nom_producte,
                 descripcio : descripcio_producte,
                 preu: price,
@@ -133,12 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("Dades del formulari:", formData);
 
             //aqui fer la peticio fetch
-
-
-            //si fetch ok
-
-            //finalment conduir l'usuari a una altra pagina o mostrar un missatge
-            //window.location.href = 'venedor_menu_inici.html';
+            crearNouProducte(formData);
         });
     }else{
         console.log('Botón no encontrado');
@@ -166,5 +170,42 @@ function comprovacioPreu(entrada){
         console.log("Error: format de preu invalid.");
         alert("El preu introduït no és vàlid!");
         return -1;
+    }
+}
+
+
+//funcio asincrona per fer el fetch cridant el endpint de la API 
+// i fer el insert a la bbdd del nou producte
+async function crearNouProducte(producte_dada){
+    try {
+        const response = await fetch("http://127.0.0.1:8000/nou_producte/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(producte_dada)
+        });
+
+        console.log("Resposta de la API:", response.status, response.statusText); // Depuració
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`HTTP ${response.status}: ${errorText}`);
+        }
+
+        const data = await response.json();
+        console.log("Resposta JSON:", data); // Depuració
+
+        if (data.detail) {
+            alert("Error al registre: " + data.detail);
+        } else {
+            alert("Producte creat correctament!");
+            const form = document.getElementById('nou_producte_form');
+            form.reset();
+            window.location.href = "venedor_menu_inici.html";
+        }
+    } catch (error) {
+        alert("Error en la creació del nou producte. " + error.message);
+        console.error("Error detallat:", error);
     }
 }

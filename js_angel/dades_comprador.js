@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
     const buttonsContainer = document.getElementById("buttons-container");
 
     //faig el logo-home que si rep click portara el usuari a la pagina index / inici
@@ -86,5 +86,219 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+    //ruta endpoint: GET /usuari/{id}
+    //fem el fetch amb el id de l'usuari per obtenir les dades de l'usuari i mostrar-les
+    //realitzar la peticio GET per verificar l'existencia de l'usuari
+    const user_data = obtenimDadesUsuari(userId);
     
 });
+
+
+//fem el fetch amb el id de l'usuari per obtenir les dades de l'usuari i mostrar-les
+//realitzar la peticio GET per verificar l'existencia de l'usuari
+async function obtenimDadesUsuari(id){
+    try {
+        const response = await fetch(`http://127.0.0.1:8000/usuari/${id}`);
+
+        if (!response.ok) {
+            throw new Error('Usuari no trobat');
+        }
+
+        //obtenim les dades de l'usuari
+        const userData = await response.json();
+        console.log("Dades de l'usuari:", userData); //depuracio
+        
+
+        //cridem la funcio per mostrar les dades de l'usuari
+        mostrarDadesComprador(userData);
+
+    } catch (error) {
+        console.log('error en el fetch', error.message);
+    }
+}
+
+
+
+//funcio per visualitzar les dades de l'usuari. Rep un json amb les dades de l'usuari
+function mostrarDadesComprador(dadesUsuari) {
+    const container = document.getElementById("dades_comprador");
+    container.innerHTML = ""; // netegem el contenidor
+
+    const titol = document.createElement('p');
+    titol.textContent = 'Les teves dades';
+    container.appendChild(titol);
+
+    //recorrem totes les claus menys 'id_usuari'
+    for (const [key, value] of Object.entries(dadesUsuari)) {
+        //saltar aquest camp que no es d'interes per l'usuari
+        if (key === "id_usuari") continue; 
+        if (key === "tipus_usuaris") continue;
+
+        //crear label
+        const label = document.createElement("label");
+        label.textContent = key;
+        label.setAttribute("for", key);
+        label.style.display = "block";
+        label.style.marginTop = "10px";
+
+        //crear input
+        const input = document.createElement("input");
+        input.type = "text";
+        input.id = key;
+        input.name = key;
+        input.value = value;
+        input.style.width = "100%";
+
+        //afegir al contenidor
+        container.appendChild(label);
+        container.appendChild(input);
+    }
+
+    //crear boto 'Editat i actualitzar'
+    const btnActualizar = document.createElement("button");
+    btnActualizar.textContent = "Editat i actualitzar";
+    btnActualizar.className = "btn-verd";
+    
+    //funció per actualitzar les dades de l'usuari
+    btnActualizar.onclick = async function() {
+        const dadesActualitzades = {};
+
+        //afegim al nou objecte les dades de ID i tipus_usuaris
+        dadesActualitzades.id_usuari = dadesUsuari.id_usuari;  
+        dadesActualitzades.tipus_usuaris = dadesUsuari.tipus_usuaris;
+        
+
+        //recollim les dades dels inputs i validem dins del bucle
+        for (const key in dadesUsuari) {
+            const input = document.getElementById(key);
+            if (input) {
+                let valor = input.value.trim();
+
+                //validacio per a cada camp
+                switch (key) {
+                    case "nom":
+                    case "cognom":
+                        //validacio del nom i cognom (no poden estar buits)
+                        if (!valor) {
+                            alert(`${key} no pot estar buit.`);
+                            return;
+                        }
+                        dadesActualitzades[key] = valor.toLowerCase();
+                        break;
+
+                    case "email":
+                        //validacio email
+                        let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailRegex.test(valor)) {
+                            alert("El correu electrònic entrat no és vàlid!");
+                            return;
+                        }
+                        dadesActualitzades[key] = valor.toLowerCase();
+                        break;
+
+                    case "contrasenya":
+                        //validacio de la contrasenya (minim 6 chars)
+                        if (valor.length < 6) {
+                            alert("La contrasenya és massa curta!");
+                            return;
+                        }
+                        dadesActualitzades[key] = valor;
+                        break;
+
+                    case "telefon":
+                        //validacio del telefon (ha de tenir 9 nums)
+                        if (!/^\d{9}$/.test(valor)) {
+                            alert("El telèfon ha de tenir 9 dígits.");
+                            return;
+                        }
+                        dadesActualitzades[key] = valor;
+                        break;
+
+                    case "dni":
+                        //validacio del DNI (8 nums + 1 lletra)
+                        if (!/^\d{8}[a-zA-Z]$/.test(valor)) {
+                            alert("DNI no vàlid.");
+                            return;
+                        }
+                        dadesActualitzades[key] = valor;
+                        break;
+
+                    case "comarca":
+                        //comarca no pot estar buit
+                        if (!valor) {
+                            alert("La comarca no pot estar buida.");
+                            return;
+                        }
+                        dadesActualitzades[key] = valor;
+                        break;
+
+                    case "iban":
+                        //validacio del compte bancari (IBAN)
+                        if (!/^[a-zA-Z]{2}\d{22}$/.test(valor)) {
+                            alert("IBAN no vàlid.");
+                            return;
+                        }
+
+                        //validacio de la longitud de 24 chars
+                        if (valor.length !== 24) {
+                            alert("El IBAN ha de tenir exactament 24 caràcters.");
+                            return;
+                        }
+
+                        dadesActualitzades[key] = valor;
+                        break;
+
+                    default:
+                        //si no es cap dels camps especifics, afegim el valor sense validacio addicional
+                        dadesActualitzades[key] = valor;
+                }
+            }
+        }
+
+        try {
+            //mostrem per la consola l'objecte amb les noves dades
+            console.log(dadesActualitzades);
+            //realitzem peticio PUT per actualitzar les dades de l'usuari
+        
+            const response = await fetch(`http://127.0.0.1:8000/usuari_put/${dadesUsuari.id_usuari}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(dadesActualitzades), //enviem les dades actualitzades com a JSON
+            });
+
+            //comprovem si la resposta ha estat correcta
+            if (!response.ok) {
+                throw new Error("Error en actualitzar les dades");
+            }
+
+            //si tot va be, mostrem un alert i actualitzem la vista amb les noves dades
+            const data = await response.json();
+            alert("Dades actualitzades correctament!");
+            //mostrem la resposta de l'API
+            console.log("Resposta de la API:", data); 
+
+            //actualitzar la vista amb les noves dades de l'usuari
+            //mostrarDadesVenedor(data); 
+        } catch (error) {
+            console.error("Error al actualitzar les dades:", error.message);
+            alert("Hi ha hagut un error en actualitzar les dades.");
+        }
+    };
+
+
+
+    //crear boto per Tornar al menú d'usuari
+    const btnTornar = document.createElement("button");
+    btnTornar.textContent = "Tornar al menú";
+    btnTornar.className = "btn-verd btn-marge-esquerra";
+    btnTornar.onclick = function () {
+        window.location.href = "comprador_menu_inici.html";
+    };
+
+    //afegim els botons al contenidor
+    container.appendChild(btnActualizar);
+    container.appendChild(btnTornar);
+}
+

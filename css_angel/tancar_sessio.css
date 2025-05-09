@@ -1,0 +1,47 @@
+/* Estilo global para el body para asegurar que ocupe toda la altura de la ventana */
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;  /* Alinea horizontalmente */
+    align-items: center;      /* Alinea verticalmente */
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4; /* Puedes cambiar el color de fondo si lo deseas */
+}
+
+/* Estilo para el contenedor que contiene el texto y el botón */
+#per_elements_tancar_sessio {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center; /* Centra el texto dentro del contenedor */
+    padding: 20px;
+    background-color: white; /* Fondo blanco para el contenedor */
+    border-radius: 10px;     /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil alrededor */
+}
+
+/* Estilo para el texto explicativo */
+#per_elements_tancar_sessio p {
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #333; /* Color oscuro para el texto */
+}
+
+/* Estilo para el botón */
+#per_elements_tancar_sessio button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff; /* Color de fondo azul */
+    color: white;
+    border: none;
+    border-radius: 5px;  /* Bordes redondeados */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Cambio de color cuando el botón es hover (cuando el usuario pasa el ratón) */
+#per_elements_tancar_sessio button:hover {
+    background-color: #0056b3; /* Color más oscuro cuando el ratón está encima */
+}

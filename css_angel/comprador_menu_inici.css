@@ -70,3 +70,118 @@ body {
     vertical-align: middle; /* Alineación correcta */
 }
 
+#visualitzacio_productes_cercats{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+  
+.fila-productes {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 30px;
+}
+  
+.producte-card {
+    width: 220px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+}
+  
+.producte-img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    background-color: #ccc;
+}
+  
+.producte-info {
+    background-color: #90ee90;
+    padding: 10px;
+    font-size: 14px;
+    text-align: center;
+}
+
+
+.producte-card {
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.producte-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.titol-usuari {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2c3e50; /* azul oscuro neutro */
+    text-align: center;
+    margin: 1rem 0;
+    padding: 0.5rem;
+    background-color: #ecf0f1; /* gris claro */
+    border-radius: 8px;
+}
+
+
+
+.producte-afegir-treure {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-quantitat {
+    padding: 5px 10px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    line-height: 1;
+    text-align: center;
+}
+
+.btn-quantitat:hover {
+    background-color: #0056b3;
+}
+
+.quantitat-numero {
+    font-size: 16px;
+    width: 30px;
+    text-align: center;
+    display: inline-block;
+}
+
+.contenidor-boto-cistella {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px; 
+}
+
+.btn-cistella {
+    background-color: #4A90E2; /* azul del contador */
+    color: white;
+    border: none;
+    padding: 12px 17px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-cistella:hover {
+    background-color: #357ABD;
+}

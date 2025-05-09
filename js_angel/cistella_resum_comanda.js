@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     logo.src = 'imatges_angel/sprout_346246.png';
     logo.alt = 'GO to home';
     logo.addEventListener('click', function(){
-    window.location.href = 'comprador_menu_inici.html';
+        window.location.href = 'comprador_menu_inici.html';
     });
     document.getElementById('logo_home').appendChild(logo);
 
@@ -94,5 +94,91 @@ document.addEventListener("DOMContentLoaded", function () {
     //al final de tot hauria de redirigir l'usuari a
     //               cistella_pagament.html
 
+    //recuperem els productes seleccionats del localStorage
+    const container = document.getElementById('visualitzacio_resum_comanda_cistella');
 
+    //recuperar productes de localStorage
+    const cistella = JSON.parse(localStorage.getItem("cistella")) || [];
+
+    //comprovar si la cistella esta buida
+    if (cistella.length === 0) {
+        container.textContent = "La teva cistella està buida.";
+        return;
+    }
+
+    //mostrar cada producte
+    cistella.forEach((producte, index) => {
+        const card = document.createElement("div");
+        card.className = "producte-resum";
+
+        card.innerHTML = `
+            <img src="${producte.imatge}" alt="${producte.nom}" class="imatge-producte">
+            <div class="info-producte">
+                <strong>${producte.nom}</strong><br>
+                Quantitat: ${producte.quantitat}<br>
+                Preu: ${parseFloat(producte.preu).toFixed(2)}€/kg<br>
+                Total: ${(parseFloat(producte.preu) * producte.quantitat).toFixed(2)}€
+            </div>
+        `;
+
+        //crear boto eliminar un producte del resum-cistella-localStorage
+        const btnEliminar = document.createElement("button");
+        btnEliminar.textContent = "Eliminar";
+        btnEliminar.className = "btn-eliminar";
+        btnEliminar.addEventListener("click", () => {
+            //esborrem producte del array de productes en el localStorage
+            cistella.splice(index, 1);
+            //actualitzar localStorage
+            localStorage.setItem("cistella", JSON.stringify(cistella));
+            //recargar la pagina
+            location.reload();
+        });
+
+        card.appendChild(btnEliminar);
+        container.appendChild(card);
+    });
+
+    
+    //calcular total de productes
+    const totalBase = cistella.reduce((sum, prod) => sum + parseFloat(prod.preu) * prod.quantitat, 0);
+
+    //definir l'import de la comissió de serveis
+    const comissio = 1.00;
+
+    //el total final amb comissió
+    const totalFinal = totalBase + comissio;
+
+    //contenidor per mostrar el total amb desglossament
+    const totalElement = document.createElement("div");
+    totalElement.className = "total-final";
+    totalElement.innerHTML = `
+        <p><strong>Subtotal:</strong> ${totalBase.toFixed(2)}€</p>
+        <p><strong>Comissió serveis:</strong> ${comissio.toFixed(2)}€</p>
+        <p><strong>Total de la comanda:</strong> ${totalFinal.toFixed(2)}€</p>
+    `;
+    container.appendChild(totalElement);
+
+
+    //afegim al localStorage un resum de la comanda
+    //per despres accedir a aquest des de la seguent fase del pagament
+    const resumComanda = {
+        productes: cistella,
+        subtotal: totalBase.toFixed(2),
+        comissio: comissio.toFixed(2),
+        total: totalFinal.toFixed(2)
+    };
+    localStorage.setItem("resum_comanda", JSON.stringify(resumComanda));
+
+
+
+    //fem boto per dirigir l'usuari a l'etapa d'introduir les seves dades bancaries i 
+    //proseguir amb el proces de pagament
+    const espaiBoto = document.getElementById('boto_per_anar_pagament');
+    const btnGoToPay = document.createElement('button');
+    btnGoToPay.textContent = 'Continuar i pagar';
+    btnGoToPay.classList.add('btn');
+    btnGoToPay.addEventListener('click', function(){
+        window.location.href = 'cistella_pagament.html';
+    });
+    espaiBoto.appendChild(btnGoToPay);
 });

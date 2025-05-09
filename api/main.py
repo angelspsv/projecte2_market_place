@@ -85,3 +85,96 @@ class Producte(BaseModel):
 async def create_producte(producte: Producte):
     result = insert_nou_producte(producte)
     return result
+
+
+#enpoint per retornar un producte amb totes les seves dades a partir del seu ID
+@app.get("/producte/{id}", response_model= dict)
+async def retornar_producte(id: int):
+    producte_data = read_producte(id)
+    return producte_schema(producte_data)
+
+
+
+#endpoint PUT per actualitzar un usuari existent
+@app.put("/usuari_put/{id}", response_model=dict)
+async def actualitzar_usuari(id: int, usuari: Usuari):
+    resultat = update_user(id, usuari)
+    return resultat
+
+
+
+#endpoint per veure tots els productes
+@app.get("/productes", response_model=List[dict])
+async def obtenir_productes():
+    productes = read_products()
+    return products_schema(productes)
+
+
+
+#endpoint per veure tots els productes del mateix venedor
+@app.get("/productes_venedor/{id}", response_model=List[dict])
+async def obtenir_productes_venedor(id: int):
+    productes = read_products_venedor(id)
+    return products_schema(productes)
+
+
+
+
+#endpoint per esborrar un producte pel seu ID
+@app.delete("/producte_del/{id}", response_model= dict)
+async def esborrar_producte(id: int):
+    producte_esborrat = delete_producte(id)
+    return producte_esborrat
+
+
+
+
+#endpoint per veure tots els productes dee la mateixa comarca 
+@app.get("/productes/{comarca}", response_model=List[dict])
+async def obtenir_productes_comarca(comarca: str):
+    productes = read_products_comarca(comarca)
+    return products_schema(productes)
+
+
+
+
+#endpoint PUT per actualitzar un producte existent
+@app.put("/producte_put/{id}", response_model=dict)
+async def actualitzar_producte(id: int, producte: Producte):
+    resultat = update_producte(id, producte)
+    return resultat
+
+
+
+# per validar les dades de Comanda abans del POST/insert
+class Compra(BaseModel):
+    id_comprador: int
+    id_venedor: int
+    recollit: int
+    preu_total: float
+    franja_entrega: str
+    targeta: str
+
+
+
+# endpoint nova comanda (POST/INSERT) a la taula COMANDA
+@app.post("/nova_comanda/", response_model=dict)
+async def create_nova_comanda(compra: Compra):
+    result = insert_nova_comanda(compra)
+    return result
+
+
+
+#endpoint per veure totes les comandes del mateix comprador
+@app.get("/comandes_comprador/{id}", response_model=List[dict])
+async def obtenir_comandes_comprador(id: int):
+    comandes = read_comandes_comprador(id)
+    return comandes_schema(comandes)
+
+
+
+#endpoint per veure totes les comandes fetes al mateix venedor
+@app.get("/comandes_venedor/{id}", response_model=List[dict])
+async def obtenir_comandes_venedor(id: int):
+    comandes = read_comandes_venedor(id)
+    return comandes_schema(comandes)
