@@ -25,7 +25,7 @@ body {
     margin-right: 10px;
 }
 
-/* Asegura que el botón "Cercar" sea igual a los demás */
+
 #per_input_i_boto {
     width: 100%;
     display: flex;
@@ -90,19 +90,40 @@ body {
 #logo_home img {
     width: 80px;  
     height: 80px; 
-    object-fit: contain; /* Assegura que la imatgen no es distorsiones */
-    transition: transform 0.2s ease-in-out; /* Efecte suau */
+    object-fit: contain; 
+    transition: transform 0.2s ease-in-out; 
 }
 
 /* Efecte hover imatge */
 #logo_home img:hover {
-    transform: scale(1.1); /* Augmenta ligerament la mida al pasar el mouse */
+    transform: scale(1.1); 
 }
 
 .logo-saludo {
     display: flex;
     align-items: center;
-    gap: 8px; /* Ajusta la separación entre el logo y el saludo */
+    gap: 8px; 
 }
 
 
+.taula-comandes {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.taula-comandes th,
+.taula-comandes td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+.taula-comandes th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.taula-comandes tr:nth-child(even) {
+    background-color: #f9f9f9;
+}

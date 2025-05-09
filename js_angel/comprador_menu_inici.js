@@ -276,7 +276,7 @@ function buscarNomEntreProductes(objectes, text_entrat){
 
 
 
-//funcio per obtenir els productes del mateix venedor
+//funcio per obtenir les dades del venedor
 async function obtenirDadesVenedor(id){
     try {
         const response = await fetch(`http://127.0.0.1:8000/usuari/${id}`);
