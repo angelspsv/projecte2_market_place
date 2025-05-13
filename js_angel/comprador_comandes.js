@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", async function(){
     const contenedorComandes = document.getElementById('visualitzacio_comandes_fetes');
 
     if (!comandes || comandes.length === 0) {
-        contenedorComandes.textContent = `${userName} encara no ha fet cap comanda!`;
+        contenedorComandes.innerHTML = `<p class="missatge-buit">${userName.toUpperCase()}, encara no has fet cap comanda!</p>`;
     } else {
         const table = document.createElement('table');
         table.classList.add('taula-comandes');
