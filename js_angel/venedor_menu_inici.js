@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //fem un array amb el text dels botons i les urls
     const buttons = [
         { text: "Les meves dades", link: "dades_venedor.html" },
-        { text: "Les meves comandes", link: "comprador_comandes.html" },
+        { text: "Les meves comandes", link: "venedor_comandes.html" },
         { text: "Pujar nou producte", link: "pujar_producte.html" },
         { text: "Tancar sessió", link: "tancar_sessio.html" }
     ];

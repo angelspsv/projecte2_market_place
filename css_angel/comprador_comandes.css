@@ -127,3 +127,13 @@ body {
 .taula-comandes tr:nth-child(even) {
     background-color: #f9f9f9;
 }
+
+
+.missatge-buit {
+    font-size: 1.2em;
+    color: #0a0a0a;
+    padding: 1rem;
+    text-align: center;
+    margin: 2rem auto;
+    max-width: 600px;
+}
