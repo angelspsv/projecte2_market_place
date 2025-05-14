@@ -198,8 +198,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             //ara nomes falta fer un String (csv) amb les dades del banc de l'usuari
-            //format: "num_tarjeta,camp_cvv,caducitat"
-            const targeta = "" + numero_targeta + "," + camp_cvv + "," + caducidad;
+            //format: "num_tarjeta;camp_cvv;caducitat;direccio"
+            const targeta = "" + numero_targeta + ";" + camp_cvv + ";" + caducidad + ";" + direccio;
             //depuracio dades targeta
             console.log(targeta);
 

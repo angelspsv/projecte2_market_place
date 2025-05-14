@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", async function(){
             //cabecera
             const header = table.createTHead();
             const headerRow = header.insertRow();
-            const headers = ['ID comanda', 'Nom comprador', 'Recollida', 'Preu total', `Franja d'entrega`, 'Targeta', 'Comanda feta'];
+            const headers = ['ID comanda', 'Nom comprador', 'Recollida', 'Preu total', 'Adreça', `Franja d'entrega`, 'Targeta', 'Comanda feta'];
             headers.forEach(text => {
                 const th = document.createElement('th');
                 th.textContent = text;
@@ -131,6 +131,7 @@ document.addEventListener("DOMContentLoaded", async function(){
                     comanda.nom_comprador || 'Desconegut',
                     comanda.recollit ? "Sí" : "No",
                     comanda.preu_total + "€",
+                    comanda.targeta.slice(27),
                     `Des de: ${comanda.franja_entrega.slice(0, 2)}h, fins a: ${comanda.franja_entrega.slice(3)}h`,
                     `**** **** **** ${comanda.targeta.slice(12, 16)}`,
                     comanda.creat_a

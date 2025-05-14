@@ -178,3 +178,11 @@ async def obtenir_comandes_comprador(id: int):
 async def obtenir_comandes_venedor(id: int):
     comandes = read_comandes_venedor(id)
     return comandes_schema(comandes)
+
+
+
+#endpoint per esborrar una comanda pel seu ID
+@app.delete("/comanda_del/{id}", response_model= dict)
+async def esborrar_comanda(id: int):
+    comanda_esborrada = delete_comanda(id)
+    return comanda_esborrada
