@@ -472,3 +472,35 @@ def read_comandes_venedor(id):
             cursor.close()
             conn.close()
 
+
+
+# metode DELETE per esborrar un producte d'un venedor
+def delete_comanda(id):
+    try:
+        conn = connexio_db()
+        if not conn:  
+            raise HTTPException(status_code=500, detail="No connection data base")  
+        # fem la query i l'executem
+        cursor = conn.cursor()  
+        cursor.execute("SELECT * FROM comanda WHERE id = %s", (id,))
+        comanda = cursor.fetchone()
+        
+        #si no existeix el producte amb id X executa excepcio
+        if comanda is None:
+            raise HTTPException(status_code=404, detail='ID product not found')
+        
+        #ja que existeix la ID, esborrem el producte
+        cursor.execute("DELETE FROM comanda WHERE id = %s", (id,))
+        #desem els canvis a la bbdd
+        conn.commit()
+
+        # retornem missatge d'exit en esborrar el producte
+        return {"message": "comanda esborrada amb exit"}
+
+    except mysql.connector.Error as e:
+        raise HTTPException(status_code=500, detail=f"Error en obtenir la comanda: {e}")
+    
+    finally:
+        if conn.is_connected():
+            cursor.close()
+            conn.close()
