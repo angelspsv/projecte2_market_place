@@ -1,2 +1,5 @@
 api/connexio.py
 api/connection.py
+api/__pycache__/ 
+app/.idea/
+api_roc/__pycache__/

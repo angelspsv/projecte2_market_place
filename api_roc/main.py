@@ -34,10 +34,18 @@ async def veure_usuaris():
 async def retornar_usuari(id: int):
     return read_usuari(id)
 
+
 # Enpoint que retorna la contraseña d'un email o null si no existeix
 @app.get("/login/{email}", response_model=dict)
 async def retornar_contrasenya(email: str):
     return read_contrasenya(email)
+
+
+# Enpoint per retornar una llista amb tots els productes d'un venedor determinat a partir de la seva ID
+@app.get("/productes/{id}", response_model=dict)
+async def retornar_productes(id: int):
+    return read_productes(id)
+
 
 # Validar les dades abans del POST/insert
 class Usuari(BaseModel):

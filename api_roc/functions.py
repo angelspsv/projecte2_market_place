@@ -1,7 +1,8 @@
 from fastapi import HTTPException
 from mysql import connector as mysql_connector
-from connection_roc import get_db_conection
+from connection import get_db_conection
 
+# <----- SCHEMAS ----->
 
 # Rep una tupla i retorna un diccionari d'usuari
 def user_schema(user) -> dict:
@@ -18,41 +19,25 @@ def user_schema(user) -> dict:
         "compte_banc": user[9],
     }
 
-
 # Rep una tupla d'usuaris i retorna una lista de diccionaris
 def users_schema(uresult) -> dict:
     return [user_schema(user) for user in uresult]
 
+# Rep una tupla amb les dades del producte i retorna un diccionari
+def product_schema(product) -> dict:
+    return {
+        "nom": product[0],
+        "desc": product[1],
+        "stock": product[2],
+        "preu": product[3],
+    }
+
+# Rep una tupla de productes i retorna una lista de diccionaris
+def products_schema(products) -> dict:
+    return [product_schema(product) for product in products]
+
 
 # <----- MÈTODES READ ----->
-
-# Aquest mètode obté les dades de tots els usuaris
-def read_usuaris():
-    try:
-        result = get_db_conection()
-
-        if isinstance(result, dict) and result.get("status") == -1:
-            return result
-
-        conn, tunnel = result
-
-        cursor = conn.cursor()
-        cursor.execute("SELECT * FROM usuaris")
-        usuaris = cursor.fetchall()
-
-        return users_schema(usuaris)
-
-    except mysql_connector.Error as e:
-        raise HTTPException(
-            status_code=500, detail=f"Error en obtenir els usuaris: {e}"
-        )
-
-    finally:
-        if "conn" in locals() and conn:
-            conn.close()
-        if "tunnel" in locals() and tunnel:
-            tunnel.stop()
-
 
 # Aquest mètode obté les dades d'un usuari amb una ID determinada
 def read_usuari(id):
@@ -85,9 +70,65 @@ def read_usuari(id):
         if "tunnel" in locals() and tunnel:
             tunnel.stop()
 
+# Aquest mètode obté les dades de tots els usuaris
+def read_usuaris():
+    try:
+        result = get_db_conection()
 
-# Aquest mètode obté les dades d'un usuari amb una ID determinada
+        if isinstance(result, dict) and result.get("status") == -1:
+            return result
+
+        conn, tunnel = result
+
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM usuaris")
+        usuaris = cursor.fetchall()
+
+        return users_schema(usuaris)
+
+    except mysql_connector.Error as e:
+        raise HTTPException(
+            status_code=500, detail=f"Error en obtenir els usuaris: {e}"
+        )
+
+    finally:
+        if "conn" in locals() and conn:
+            conn.close()
+        if "tunnel" in locals() and tunnel:
+            tunnel.stop()
+
+# Aquest mètode obté la contrasenya i el tipus d'un usuari amb un email determinat
 def read_contrasenya(email):
+    try:
+        result = get_db_conection()
+
+        if isinstance(result, dict) and result.get("status") == -1:
+            return result
+
+        conn, tunnel = result
+
+        # Definim la query i l'executem
+        cursor = conn.cursor()
+        cursor.execute(f"SELECT contrasenya, tipus_usuaris FROM usuaris WHERE email = '{email}'")
+        data = cursor.fetchone()
+        
+        # Si existeix una contrasenya asociada al mail la retorna, si no, retorna None
+        if data is None:
+            return {"password": None, "userType": None}
+        else:
+            return {"password": data[0], "userType": data[1]}
+
+    except mysql_connector.Error as e:
+        raise HTTPException(status_code=500, detail=f"Error en obtenir la contrasenya: {e}")
+
+    finally:
+        if "conn" in locals() and conn:
+            conn.close()
+        if "tunnel" in locals() and tunnel:
+            tunnel.stop()
+
+# Aquest mètode obté els productes d'un usuari amb una ID determinada
+def read_productes(id):
     try:
         result = get_db_conection()
 
@@ -98,14 +139,15 @@ def read_contrasenya(email):
 
         # Fem la query i l'executem
         cursor = conn.cursor()
-        cursor.execute(f"SELECT contrasenya, tipus_usuaris FROM usuaris WHERE email = '{email}'")
-        data = cursor.fetchone()
+        cursor.execute(f"SELECT * FROM productes WHERE id_venedor = '{id}'")
+        products = cursor.fetchall()
         
         # Si existeix una contrasenya asociada al mail la retorna, si no retorna None
-        if data is None:
-            return {"contrasenya": None, "user_type": None}
+        if products is None:
+            return {"productes": None}
         else:
-            return {"contrasenya": data[0], "user_type": data[1]}
+            print(products_schema(products))
+            return products_schema(products)
 
     except mysql_connector.Error as e:
         raise HTTPException(status_code=500, detail=f"Error en obtenir la contrasenya: {e}")
@@ -115,8 +157,8 @@ def read_contrasenya(email):
             conn.close()
         if "tunnel" in locals() and tunnel:
             tunnel.stop()
-            
-            
+
+
 # <----- MÈTODES CREATE ----->
 
 # Aquest mètode insereix un nou usuari a la taula usuaris
@@ -159,7 +201,6 @@ def create_usuari(usuari):
             conn.close()
         if "tunnel" in locals() and tunnel:
             tunnel.stop()
-
 
 # Aquest mètode insereix un nou producte a la taula productes
 def create_producte(producte):
