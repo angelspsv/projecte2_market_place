@@ -17,7 +17,25 @@
 + En la carpeta wireframes_web (https://github.com/angelspsv/projecte2_market_place/tree/main/wireframes_web) estan els wireframes que vaig dissenyar al començament del projecte.
 
 
+## Tasques realitzades en aquest projecte:
 
+- intervenir en el disseny de la base de dades
+- realitzar els wireframes web de baixa i alta fidelitat
+- crear l'API i tots els endpoints que fa servir la pàgina web
+- programar tot el codi de la pàgina web (fitxers: js, html i css)
+- intervenir en la redacció de la memòria final del projecte
+- intervenir en la creació de l'excel /requeriments i casos de prova/ ![link doc excel requeriments i casos de prova](https://docs.google.com/spreadsheets/d/12p8Ltpf-7BIqkJc8cvjYpvqa9SkM08cWD_kM25HuPcw/edit?usp=sharing) que en el nostre cas ve a substituir el Kanban, ja que vam veure ambas tasques molt semblants.
+
+
+
+
+## Altres enllaços:
+
++ Enllaç a la memòria del projecte en format word: https://docs.google.com/document/d/1BhFzjUOgs8S2WeY2fM5rBQGwfl9so3Q92bXR-wmLbqY/edit?usp=sharing
+
++ Enllaç al directori amb les actes de reunió dels diferents sprints: https://drive.google.com/drive/folders/1mIC2DBC-xDeaiddQLMnwmLmfx1EgdgBW?usp=sharing
+
++ Enllaç al full d'excel amb els requeriments i casos de prova: https://docs.google.com/spreadsheets/d/12p8Ltpf-7BIqkJc8cvjYpvqa9SkM08cWD_kM25HuPcw/edit?usp=sharing
 
 
 
