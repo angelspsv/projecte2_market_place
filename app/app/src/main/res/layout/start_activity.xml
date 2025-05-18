@@ -30,7 +30,7 @@
         app:srcCompat="@drawable/app_logo" />
 
     <Button
-        android:id="@+id/login_button"
+        android:id="@+id/start_activity_login_button"
         style="@style/inner_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,14 +38,14 @@
         android:paddingHorizontal="45dp"
         android:paddingVertical="10dp"
         android:text="INICIAR SESSIÓ"
-        app:layout_constraintBottom_toTopOf="@id/start_register"
+        app:layout_constraintBottom_toTopOf="@id/start_activity_register_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/start_title"
         app:layout_constraintVertical_bias="0.904" />
 
     <Button
-        android:id="@+id/start_register"
+        android:id="@+id/start_activity_register_button"
         style="@style/inner_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

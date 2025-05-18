@@ -75,7 +75,7 @@
         <item name="itemIconTint">@color/nav_item_colors</item>
         <item name="itemIconSize">@dimen/nav_icon_size</item>
         <item name="labelVisibilityMode">unlabeled</item>
-        <item name="menu">@menu/bottom_nav_menu</item>
+        <item name="menu">@menu/default_bottom_nav_menu</item>
         <item name="android:paddingVertical">@dimen/nav_vertical_padding</item>
     </style>
 

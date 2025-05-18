@@ -1,25 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/view_style"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:fitsSystemWindows="true"
+    tools:context=".MainActivity"
+    tools:viewBindingIgnore="false">
+
 
     <TextView
         android:id="@+id/seller_profile_title"
+        style="@style/title_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Seller Profile"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:paddingBottom="8dp" />
+        android:text="Hola, !"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:padding="8dp"
-        android:scrollbars="vertical" />
-</LinearLayout>
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/seller_profile_edit_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seller_profile_title"
+        app:srcCompat="@drawable/profile_picture_placeholder"
+        tools:layout_editor_absoluteX="55dp" />
+
+    <Button
+        android:id="@+id/seller_profile_edit_button"
+        style="@style/inner_text"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_button"
+        android:paddingHorizontal="40dp"
+        android:paddingVertical="10dp"
+        android:text="EDITAR PERFIL"
+        app:layout_constraintBottom_toTopOf="@+id/seller_profile_logoff_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        tools:layout_editor_absoluteX="70dp" />
+
+    <Button
+        android:id="@+id/seller_profile_logoff_button"
+        style="@style/inner_text"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="35dp"
+        android:background="@drawable/rounded_button"
+        android:paddingHorizontal="40dp"
+        android:paddingVertical="10dp"
+        android:text="TANCAR SESSIÓ"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seller_profile_edit_button"
+        tools:layout_editor_absoluteX="70dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

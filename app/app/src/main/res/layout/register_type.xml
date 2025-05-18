@@ -98,7 +98,7 @@
 
 
     <ImageButton
-        android:id="@+id/reg_type_button"
+        android:id="@+id/register_type_next_button"
         style="@style/inner_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

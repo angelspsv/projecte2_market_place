@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/view_style"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    tools:viewBindingIgnore="false">
+
+
+    <TextView
+        android:id="@+id/seller_edit_product_title"
+        style="@style/title_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="EDITAR PRODUCTE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/seller_edit_product_title"
+        app:layout_constraintVertical_bias="0.15">
+
+        <TextView
+            android:id="@+id/textView1"
+            style="@style/inner_form_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginBottom="2dp"
+            android:text="Nom" />
+
+        <EditText
+            android:id="@+id/seller_edit_product_name"
+            style="@style/inner_form_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/form_field"
+            android:hint="Nom"
+            android:paddingHorizontal="40dp"
+            android:paddingVertical="15dp"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/textView2"
+            style="@style/inner_form_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="2dp"
+            android:text="Descripció" />
+
+        <EditText
+            android:id="@+id/seller_edit_product_desc"
+            style="@style/inner_form_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/form_field"
+            android:hint="Desc"
+            android:paddingHorizontal="40dp"
+            android:paddingVertical="15dp"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/textView3"
+            style="@style/inner_form_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="2dp"
+            android:text="Preu" />
+
+        <EditText
+            android:id="@+id/seller_edit_product_price"
+            style="@style/inner_form_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/form_field"
+            android:hint="Preu"
+            android:paddingHorizontal="40dp"
+            android:paddingVertical="15dp"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/textView4"
+            style="@style/inner_form_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="2dp"
+            android:text="Stock" />
+
+        <EditText
+            android:id="@+id/seller_edit_product_stock"
+            style="@style/inner_form_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/form_field"
+            android:hint="Stock"
+            android:paddingHorizontal="40dp"
+            android:paddingVertical="15dp"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/textView5"
+            style="@style/inner_form_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="2dp"
+            android:text="URL" />
+
+        <EditText
+            android:id="@+id/seller_edit_product_url"
+            style="@style/inner_form_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/form_field"
+            android:ellipsize="end"
+            android:hint="URL"
+            android:paddingHorizontal="40dp"
+            android:paddingVertical="15dp"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="" />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cLayout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout1">
+
+        <Button
+            android:id="@+id/seller_edit_product_delete_button"
+            style="@style/inner_text"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/rounded_button_red"
+            android:paddingVertical="10dp"
+            android:text="ELIMINAR"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/seller_edit_product_save_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/seller_edit_product_save_button"
+            style="@style/inner_text"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/rounded_button"
+            android:paddingVertical="10dp"
+            android:text="GUARDAR"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/seller_edit_product_delete_button"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

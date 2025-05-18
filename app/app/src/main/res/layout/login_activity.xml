@@ -63,7 +63,7 @@
         app:layout_constraintVertical_bias="0.75" />
 
     <Button
-        android:id="@+id/login_button"
+        android:id="@+id/start_activity_login_button"
         style="@style/inner_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

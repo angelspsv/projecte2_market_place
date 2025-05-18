@@ -7,11 +7,6 @@
         android:title="" />
 
     <item
-        android:id="@+id/nav_menu_options"
-        android:icon="@drawable/bar_icon_options"
-        android:title="" />
-
-    <item
         android:id="@+id/nav_menu_profile"
         android:icon="@drawable/bar_icon_profile"
         android:title="" />

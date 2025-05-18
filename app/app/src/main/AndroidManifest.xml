@@ -29,6 +29,10 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".BuyerMainActivity" />
         <activity android:name=".SellerMainActivity" />
+        <activity android:name=".SellerEditProductActivity" />
+        <activity android:name=".SellerEditProfileActivity" />
+        <activity android:name=".SellerCreateProductActivity" />
+        <activity android:name=".BuyerEditProfileActivity" />
     </application>
 
 </manifest>

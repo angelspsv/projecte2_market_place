@@ -14,10 +14,10 @@ class StartActivity : AppCompatActivity() {
 
         Log.d("ACTIVITY", "StartActivity")
 
-        findViewById<Button>(R.id.login_button).setOnClickListener()
+        findViewById<Button>(R.id.start_activity_login_button).setOnClickListener()
         { startActivity(Intent(this, LogInActivity::class.java)) }
 
-        findViewById<Button>(R.id.start_register).setOnClickListener()
+        findViewById<Button>(R.id.start_activity_register_button).setOnClickListener()
         { startActivity(Intent(this, RegisterActivity::class.java)) }
 
     }
